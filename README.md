@@ -1,4 +1,15 @@
 # "NHL-MyTeam" Scriptable iOS widget  🏒
+I created a widget for iOS and the [Scriptable.app](https://scriptable.app/) to always see on the homescreen of my iPhone when the next games are up for my favorite NHL team.
+
+## Table of Content
+
+1.  [Features](https://github.com/thisisevanfox/nhl-my-team-ios-widget#features-) 💡
+2.  [Getting started with the widget](https://github.com/thisisevanfox/nhl-my-team-ios-widget#getting-started-with-the-widget-) 🚀
+3.  [Register for updates](https://github.com/thisisevanfox/nhl-my-team-ios-widget#register-for-updates-) 📥
+4.  [Frequently Asked Questions (FAQs)](https://github.com/thisisevanfox/nhl-my-team-ios-widget#frequently-asked-questions-faqs-) ❓
+5. [Bugs](https://github.com/thisisevanfox/nhl-my-team-ios-widget#bugs-) 🐞
+6. [References](https://github.com/thisisevanfox/nhl-my-team-ios-widget#references-) 🏆
+
 ## Features 💡      
 <p align="center">
 <a href="https://i.ibb.co/FJBk6Xj/Nhl-My-Team-Screenshot-Big.png"><img src="https://i.ibb.co/0yMQLLZ/Nhl-My-Team-Screenshot-Small.png" alt="Widget supports light- and dark-mode" border="0" /></a>
