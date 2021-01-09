@@ -110,7 +110,7 @@ async function addWidgetData(oWidget) {
   const oTopRow = oWidget.addStack();
   await setStackBackground(oTopRow);
   oTopRow.cornerRadius = 12;
-  oTopRow.size = new Size(308, 12);
+  oTopRow.size = new Size(308, 15);
   oTopRow.setPadding(7, 7, 7, 7);
   oTopRow.layoutVertically();
 
