@@ -23,6 +23,9 @@ Note: I don't know how the api displays the games when it comes to playoffs. I'l
 5. Add a Scriptable-widget to your homescreen.
    * Add it with size "medium".
    * Make sure to choose "Run script" for "When Interacting".
+   
+## Frequently Asked Questions (FAQs)
+All Frequently Asked Question are collected [here](https://github.com/thisisevanfox/nhl-my-team-ios-widget/blob/main/FAQ.md).
 
 ## Known bugs 🐞
 * Top and bottom banners being off center. (Device: XS Max) [Screenshot](https://imgur.com/gallery/fvhmnew)
