@@ -6,7 +6,7 @@
                                                                     
 * Shows date and time of next game (local timezone)
 * Shows city where the next game takes place
-* Show live score of next game
+* Show live score of next game. "Live" depends on how often the widget on the homescreen updates itself. It is not possible to say exactly, when it updates.
 * Shows stats of both teams (wins, losses, overtime losses)
 * Shows top scorer of your team and the opponent (currently of last season, it will update after the first game)
 * Shows next 4 games with date
