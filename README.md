@@ -31,10 +31,8 @@ Don't want to miss a update for this widget? Just head over to [this](https://fo
 ## Frequently Asked Questions (FAQs)
 All Frequently Asked Question are collected [here](https://github.com/thisisevanfox/nhl-my-team-ios-widget/blob/main/FAQ.md).
 
-## Known bugs 🐞
-* Top and bottom banners being off center. (Device: XS Max) [Screenshot](https://imgur.com/gallery/fvhmnew)
-
-Find another bug? Feel free to create a issue.
+## Bugs 🐞
+Found a bug? Feel free to create a issue.
 
 ## References 🏆
 I used the publicly accessible NHL api which is documented by  [dword4](https://gitlab.com/dword4/nhlapi). The logos are taken from [thesportsdb.com](https://thesportsdb.com). 
