@@ -16,6 +16,15 @@ const MY_NHL_TEAM = "TOR";
 ```
 if the Leafs are your team.
 
+## I get the following error '“Error on line ...: syntax error: unexpected EOF”'
+Make sure you copied the whole script from [here](https://raw.githubusercontent.com/thisisevanfox/nhl-my-team-ios-widget/main/NHL-MyTeam-Widget.js).
+Make sure you copy it until the following lines are marked:
+```
+/********************************************************
+ ************* MAKE SURE TO COPY EVERYTHING *************
+ *******************************************************/
+```
+
 ### no-background doesn't work
 1. Make sure no-background.js is installed properly: Just copy [this](https://raw.githubusercontent.com/supermamon/scriptable-no-background/master/no-background.js) as a seperate script "no-background".
 
