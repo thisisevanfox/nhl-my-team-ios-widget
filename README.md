@@ -6,7 +6,8 @@
                                                                     
 * Shows date and time of next game (local timezone)
 * Shows city where the next game takes place
-* Shows stats of both teams (wins, overtime wins, losses)
+* Show live score of next game
+* Shows stats of both teams (wins, losses, overtime losses)
 * Shows top scorer of your team and the opponent (currently of last season, it will update after the first game)
 * Shows next 4 games with date
 * Caches logos to save data volume.
@@ -18,7 +19,7 @@ Note: I don't know how the api displays the games when it comes to playoffs. I'l
 ## Getting started with the widget 🚀
 1. Download Scriptable from the AppStore. Click [here](https://apps.apple.com/us/app/scriptable/id1405459188?uo=4) to get to AppStore.
 2. Click the "+"-Icon in the Scriptable-app.
-3. Copy all the text from the NHL-MyTeam-Widget.js-file in this Gist. Please click the "RAW"-Button then it opens as a text file and it's easier to copy it.
+3. Copy all the text from the NHL-MyTeam-Widget.js-file. Click [here](https://raw.githubusercontent.com/thisisevanfox/nhl-my-team-ios-widget/main/NHL-MyTeam-Widget.js) to get to the file.
 4. Step through the user settings in the script.
 5. Add a Scriptable-widget to your homescreen.
    * Add it with size "medium".
