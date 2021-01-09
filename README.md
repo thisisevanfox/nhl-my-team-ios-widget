@@ -16,6 +16,8 @@
 
 Note: I don't know how the api displays the games when it comes to playoffs. I'll have to check again when the season is at this point.
 
+You want to have more information on the releases? Check the [changelog](https://github.com/thisisevanfox/nhl-my-team-ios-widget/blob/main/Changelog.md).
+
 ## Getting started with the widget 🚀
 1. Download Scriptable from the AppStore. Click [here](https://apps.apple.com/us/app/scriptable/id1405459188?uo=4) to get to AppStore.
 2. Click the "+"-Icon in the Scriptable-app.
@@ -25,10 +27,10 @@ Note: I don't know how the api displays the games when it comes to playoffs. I'l
    * Add it with size "medium".
    * Make sure to choose "Run script" for "When Interacting".
    
-## Register for updates
-Don't want to miss a update for this widget? Just head over to [this](https://forms.gle/4SBmYLcVgzFak7SZ9) GoogleForm, type your e-Mail adress and I'll send you an e-Mail when a new update is released.
+## Register for updates 📥
+Don't want to miss a update for this widget? Just head over to [this](https://forms.gle/4SBmYLcVgzFak7SZ9) GoogleForm, type your email address and I'll send you an email when a new update is released.
    
-## Frequently Asked Questions (FAQs)
+## Frequently Asked Questions (FAQs) ❓
 All Frequently Asked Question are collected [here](https://github.com/thisisevanfox/nhl-my-team-ios-widget/blob/main/FAQ.md).
 
 ## Bugs 🐞
