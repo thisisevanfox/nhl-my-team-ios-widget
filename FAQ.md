@@ -72,4 +72,4 @@ with
 const WIDGET_URL = "";
 ```
 ### How can I get future updates for this widget?
-Just head over to [this](https://forms.gle/4SBmYLcVgzFak7SZ9) GoogleForm, type your e-Mail adress and I'll send you an e-Mail when a new update is released.
+Just head over to [this](https://forms.gle/4SBmYLcVgzFak7SZ9) GoogleForm, type your email address and I'll send you an email when a new update is released.
