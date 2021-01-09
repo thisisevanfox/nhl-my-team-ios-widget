@@ -1,4 +1,4 @@
-# "NHL-MyTeam" Scriptable widget  🏒
+# "NHL-MyTeam" Scriptable iOS widget  🏒
 ## Features 💡      
 <p align="center">
 <a href="https://i.ibb.co/FJBk6Xj/Nhl-My-Team-Screenshot-Big.png"><img src="https://i.ibb.co/0yMQLLZ/Nhl-My-Team-Screenshot-Small.png" alt="Widget supports light- and dark-mode" border="0" /></a>
