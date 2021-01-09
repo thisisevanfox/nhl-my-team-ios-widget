@@ -25,6 +25,9 @@ Note: I don't know how the api displays the games when it comes to playoffs. I'l
    * Add it with size "medium".
    * Make sure to choose "Run script" for "When Interacting".
    
+## Register for updates
+Don't want to miss a update for this widget? Just head over to [this](https://forms.gle/4SBmYLcVgzFak7SZ9) GoogleForm, type your e-Mail adress and I'll send you an e-Mail when a new update is released.
+   
 ## Frequently Asked Questions (FAQs)
 All Frequently Asked Question are collected [here](https://github.com/thisisevanfox/nhl-my-team-ios-widget/blob/main/FAQ.md).
 
