@@ -5,7 +5,7 @@ Go to your homescreen, Click&Hold. Edit Homescreen. Right above there‘s a +. C
 
 Does it say "Select script in widget configurator"? Then you have to "click & hold" -> "edit widget". Then choose for Script "NHL-MyTeam-Widget", for When Interacting "Run script".
 
-### I get the following error: 'TypeError: undefined is not an object (evaluating 'oTeamData[MY_NHL_TEAM].id')”'      
+### I get the following error: 'TypeError: undefined is not an object (evaluating 'oTeamData[MY_NHL_TEAM].id')'      
 Replace
 ```
 const MY_NHL_TEAM = "ENTER_TEAM_ABBREVIATION_HERE";
@@ -16,7 +16,7 @@ const MY_NHL_TEAM = "TOR";
 ```
 if the Leafs are your team.
 
-## I get the following error '“Error on line ...: syntax error: unexpected EOF”'
+## I get the following error: 'Error on line ...: syntax error: unexpected EOF'
 Make sure you copied the whole script from [here](https://raw.githubusercontent.com/thisisevanfox/nhl-my-team-ios-widget/main/NHL-MyTeam-Widget.js).
 Make sure you copy it until the following lines are marked:
 ```
