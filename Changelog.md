@@ -1,7 +1,7 @@
 # Changelog
 ## v2
 ### New features:
-- Added livescores. Livescores are enabled by default. See [FAQs](https://github.com/thisisevanfox/nhl-my-team-ios-widget/blob/main/FAQ.md#how-to-disable-live-ticker) to disable them.
+- Added livescores. Livescores are enabled by default. See [FAQs](https://github.com/thisisevanfox/nhl-my-team-ios-widget/blob/main/FAQ.md#how-to-disable-live-ticker) to disable them. "Live" depends on how often the widget on the homescreen updates itself. It is not possible to say exactly, when it updates.
 - Added link to NHL app when clicking the widget. To disable it please check the [FAQs](https://github.com/thisisevanfox/nhl-my-team-ios-widget/blob/main/FAQ.md#how-to-disable-link-to-nhl-app).
 ### Bugfixes:
 - Games in european timezones start after midnight. To have the next game displayed properly, we have to calculate back the beginning (-6 hours)
