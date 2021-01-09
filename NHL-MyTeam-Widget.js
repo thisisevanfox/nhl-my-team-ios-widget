@@ -1,0 +1,654 @@
+// Variables used by Scriptable.
+// These must be at the very top of the file. Do not edit.
+// icon-color: blue; icon-glyph: hockey-puck;
+
+/********************************************************
+ * script     : NHL-MyTeam-Widget.js
+ * version    : 1.0.0
+ * description: Widget for Scriptable.app, which shows
+ *              the next games for your NHL team
+ * author     : @thisisevanfox
+ * date       : 2021-01-08
+ *******************************************************/
+
+/********************************************************
+ ******************** USER SETTINGS *********************
+ ************ PLEASE MODIFY BEFORE FIRST RUN ************
+ *******************************************************/
+
+// Type the abbreviation of your NHL team here.
+// North Division: CGY, EDM, MTL, OTT, TOR, VAN, WPG
+// East Division: BOS, BUF, NJD, NYI, NYR, PHI, PIT, WSH
+// Central Division: CAR, CHI, CBJ, DAL, DET, FLA, NSH, TBL
+// West Division: ANA, ARI, COL, LAK, MIN, STL, SJS, VGK
+const MY_NHL_TEAM = "ENTER_TEAM_ABBREVIATION_HERE";
+
+// Set appearance of the widget. Default apperance is set to the system color scheme.
+// Device.isUsingDarkAppearance() = System color scheme (default)
+// true = Widget will be in dark mode.
+// false = Widget will be in light mode.
+const DARK_MODE = Device.isUsingDarkAppearance();
+
+// Indicator if no-background.js is installed
+// Default: false
+// @see: https://github.com/supermamon/scriptable-no-background
+const NO_BACKGROUND_INSTALLED = false;
+
+// Indicator if no-background.js should be active
+// Only matters if NO_BACKGROUND_INSTALLED is true.
+const NO_BACKGROUND_ACTIVE = true;
+
+// Indicator if no-background.js should be active for whole widget
+// No background for widget and no background for stacks in the widget
+// Only matters if NO_BACKGROUND_INSTALLED is true.
+const NO_BACKGROUND_FULL_ACTIVE = true;
+
+/********************************************************
+ ********************************************************
+ *********** DO NOT CHANGE ANYTHING FROM HERE ***********
+ ********************************************************
+ *******************************************************/
+const { transparent } = NO_BACKGROUND_INSTALLED
+  ? importModule("no-background")
+  : emptyFunction();
+
+const WIDGET_BACKGROUND = DARK_MODE ? new Color("gray") : new Color("#D6D6D6");
+const STACK_BACKGROUND = DARK_MODE
+  ? new Color("#1D1D1D")
+  : new Color("#FFFFFF"); //Smaller Container Background
+
+const oNhlWidget = await createWidget();
+
+if (config.runsInWidget) {
+  // The script runs inside a widget, so we pass our instance of ListWidget to be shown inside the widget on the Home Screen.
+  Script.setWidget(oNhlWidget);
+} else {
+  // The script runs inside the app, so we preview the widget.
+  oNhlWidget.presentMedium();
+}
+
+/**
+ * Creates widget.
+ *
+ * @return {ListWidget}
+ */
+async function createWidget() {
+  // Initialise widget
+  const oWidget = new ListWidget();
+  if (NO_BACKGROUND_INSTALLED && NO_BACKGROUND_ACTIVE) {
+    oWidget.backgroundImage = await transparent(Script.name());
+  } else {
+    oWidget.backgroundColor = WIDGET_BACKGROUND;
+  }
+  oWidget.setPadding(10, 10, 10, 10);
+
+  await addWidgetData(oWidget);
+
+  return oWidget;
+}
+
+/**
+ * Add data to widget.
+ *
+ * @param {ListWidget} oWidget
+ */
+async function addWidgetData(oWidget) {
+  const oGameData = await prepareData();
+
+  const oTopRow = oWidget.addStack();
+  await setStackBackground(oTopRow);
+  oTopRow.cornerRadius = 12;
+  oTopRow.size = new Size(308, 12);
+  oTopRow.setPadding(7, 7, 7, 7);
+  oTopRow.layoutVertically();
+
+  const oSpacerStack1 = oTopRow.addStack();
+  oSpacerStack1.layoutHorizontally();
+  oSpacerStack1.addSpacer();
+
+  const oHeadingStack = oTopRow.addStack();
+  oHeadingStack.layoutHorizontally();
+  oHeadingStack.addSpacer();
+  oHeadingStack.setPadding(7, 7, 7, 7);
+
+  const dGameDate = new Date(oGameData.gameDate);
+  const dLocalDate = dGameDate.toLocaleString([], {
+    year: "numeric",
+    month: "2-digit",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const oHeadingText = oHeadingStack.addText(
+    `${dLocalDate} - ${oGameData.venue}`
+  );
+  oHeadingText.font = Font.boldSystemFont(11);
+  oHeadingText.textColor = getColorForCurrentAppearance();
+
+  oHeadingStack.addSpacer();
+
+  const oSpacerStack2 = oTopRow.addStack();
+  oSpacerStack2.layoutHorizontally();
+  oSpacerStack2.addSpacer();
+
+  oWidget.addSpacer();
+
+  const oNextGameStack = oWidget.addStack();
+  oNextGameStack.layoutHorizontally();
+  oNextGameStack.cornerRadius = 12;
+
+  const oHomeTeamStack = oNextGameStack.addStack();
+  oHomeTeamStack.layoutVertically();
+  oHomeTeamStack.centerAlignContent();
+  oHomeTeamStack.setPadding(7, 7, 7, 7);
+  await setStackBackground(oHomeTeamStack);
+  oHomeTeamStack.cornerRadius = 12;
+  oHomeTeamStack.size = new Size(150, 0);
+
+  const oHomeLogoImage = await loadLogo(
+    oGameData.homeTeam.logoLink,
+    oGameData.homeTeam.abbreviation
+  );
+  const oHomeLogo = oHomeTeamStack.addImage(oHomeLogoImage);
+  oHomeLogo.imageSize = new Size(40, 40);
+  oHomeLogo.centerAlignImage();
+
+  const oHomeTeamStatsText = oHomeTeamStack.addText(
+    "W: " +
+      oGameData.homeTeam.record.wins +
+      " - OT: " +
+      oGameData.homeTeam.record.ot +
+      " - L: " +
+      oGameData.homeTeam.record.losses
+  );
+  oHomeTeamStatsText.centerAlignText();
+  oHomeTeamStatsText.font = Font.systemFont(11);
+  oHomeTeamStatsText.textColor = getColorForCurrentAppearance();
+
+  const oHomeTeamTopScorerText = oHomeTeamStack.addText(
+    `${oGameData.homeTeam.topscorer.name} (${oGameData.homeTeam.topscorer.points})`
+  );
+  oHomeTeamTopScorerText.centerAlignText();
+  oHomeTeamTopScorerText.font = Font.systemFont(9);
+  oHomeTeamTopScorerText.textColor = getColorForCurrentAppearance();
+
+  oNextGameStack.addSpacer();
+
+  const oAwayTeamStack = oNextGameStack.addStack();
+  oAwayTeamStack.layoutVertically();
+  oAwayTeamStack.centerAlignContent();
+  oAwayTeamStack.setPadding(7, 7, 7, 7);
+  await setStackBackground(oAwayTeamStack);
+  oAwayTeamStack.cornerRadius = 12;
+  oAwayTeamStack.size = new Size(150, 0);
+
+  const oAwayLogoImage = await loadLogo(
+    oGameData.awayTeam.logoLink,
+    oGameData.awayTeam.abbreviation
+  );
+  const oAwayLogo = oAwayTeamStack.addImage(oAwayLogoImage);
+  oAwayLogo.imageSize = new Size(40, 40);
+  oAwayLogo.centerAlignImage();
+
+  const oAwayTeamStatsText = oAwayTeamStack.addText(
+    "W: " +
+      oGameData.awayTeam.record.wins +
+      " - OT: " +
+      oGameData.awayTeam.record.ot +
+      " - L: " +
+      oGameData.awayTeam.record.losses
+  );
+  oAwayTeamStatsText.font = Font.systemFont(11);
+  oAwayTeamStatsText.textColor = getColorForCurrentAppearance();
+
+  const oAwayTeamTopScorerText = oAwayTeamStack.addText(
+    `${oGameData.awayTeam.topscorer.name} (${oGameData.awayTeam.topscorer.points})`
+  );
+  oAwayTeamTopScorerText.font = Font.systemFont(9);
+  oAwayTeamTopScorerText.textColor = getColorForCurrentAppearance();
+
+  oWidget.addSpacer();
+
+  const oFutureGamesStack = oWidget.addStack();
+  oFutureGamesStack.layoutHorizontally();
+  oFutureGamesStack.centerAlignContent();
+  await setStackBackground(oFutureGamesStack);
+  oFutureGamesStack.cornerRadius = 12;
+  oFutureGamesStack.setPadding(3, 7, 3, 7);
+  oFutureGamesStack.addSpacer();
+  oFutureGamesStack.size = new Size(308, 0);
+
+  for (let i = 0; i < oGameData.nextGames.length; i++) {
+    const oNextGame = oGameData.nextGames[i];
+
+    const oFutureGame = oFutureGamesStack.addStack();
+    oFutureGame.layoutHorizontally();
+    oFutureGame.addSpacer();
+
+    const oFutureGameLogoImage = await loadLogo(
+      oNextGame.opponent.logoLink,
+      oNextGame.opponent.abbreviation
+    );
+    const oNextGameLogo = oFutureGame.addImage(oFutureGameLogoImage);
+    oNextGameLogo.imageSize = new Size(15, 15);
+
+    const dGameDate = new Date(oNextGame.gameDate);
+    const dLocalDate = dGameDate.toLocaleString([], {
+      month: "2-digit",
+      day: "numeric",
+    });
+    const oNextGameText = oFutureGame.addText(` ${dLocalDate}`);
+    oNextGameText.font = Font.systemFont(11);
+    oNextGameText.textColor = getColorForCurrentAppearance();
+
+    oFutureGame.addSpacer();
+  }
+
+  oFutureGamesStack.addSpacer();
+}
+
+/**
+ * Prepares data.
+ *
+ * @return {Object[]}
+ */
+async function prepareData() {
+  const oData = {
+    gameDate: "",
+    venue: "",
+    nextGames: [],
+    homeTeam: {
+      abbreviation: "",
+      logoLink: "",
+      record: {},
+      topscorer: {
+        name: "",
+        points: "",
+      },
+    },
+    awayTeam: {
+      abbreviation: "",
+      logoLink: "",
+      record: {},
+      topscorer: {
+        name: "",
+        points: "",
+      },
+    },
+  };
+
+  const oTeamData = getTeamData();
+  let oScheduleData = await fetchScheduleData(oTeamData);
+
+  const oNextGame = oScheduleData.dates[0].games[0];
+  if (oNextGame != undefined) {
+    const oHomeTeam = oNextGame.teams.home;
+    const oAwayTeam = oNextGame.teams.away;
+
+    const oHomeTeamTopScorer = await fetchTopScorer(oHomeTeam.team.id);
+    const oAwayTeamTopScorer = await fetchTopScorer(oAwayTeam.team.id);
+
+    oData.gameDate = oNextGame.gameDate;
+    oData.venue = oNextGame.venue.city
+      ? oNextGame.venue.city
+      : oNextGame.venue.location.city;
+    oData.nextGames = getNextGames(oScheduleData.dates, oTeamData);
+    oData.homeTeam.abbreviation = oHomeTeam.team.abbreviation;
+    oData.homeTeam.logoLink = oTeamData[oData.homeTeam.abbreviation].logo;
+    oData.homeTeam.record = oHomeTeam.leagueRecord;
+    oData.homeTeam.topscorer.name = oHomeTeamTopScorer.person.fullName;
+    oData.homeTeam.topscorer.points = oHomeTeamTopScorer.value;
+    oData.awayTeam.abbreviation = oAwayTeam.team.abbreviation;
+    oData.awayTeam.logoLink = oTeamData[oData.awayTeam.abbreviation].logo;
+    oData.awayTeam.record = oAwayTeam.leagueRecord;
+    oData.awayTeam.topscorer.name = oAwayTeamTopScorer.person.fullName;
+    oData.awayTeam.topscorer.points = oAwayTeamTopScorer.value;
+  }
+
+  return oData;
+}
+
+/**
+ * Returns next games.
+ *
+ * @param {Object[]} aGames
+ * @param {Object} oTeamData
+ * @return {Object[]}
+ */
+function getNextGames(aGames, oTeamData) {
+  const sMyTeamId = oTeamData[MY_NHL_TEAM].id;
+  const aNextGames = [];
+  const iLength = aGames.length < 5 ? aGames.length : 5;
+
+  for (let i = 1; i < iLength; i++) {
+    let oData = {
+      gameDate: "",
+      opponent: {
+        abbreviation: "",
+        logoLink: "",
+      },
+    };
+
+    const oGame = aGames[i].games[0];
+    oData.gameDate = oGame.gameDate;
+    if (oGame.teams.away.team.id == sMyTeamId) {
+      oData.opponent.abbreviation = oGame.teams.home.team.abbreviation;
+    } else {
+      // Yeey, it's a homegame for my team :-)
+      oData.opponent.abbreviation = oGame.teams.away.team.abbreviation;
+    }
+    oData.opponent.logoLink = oTeamData[oData.opponent.abbreviation].logo;
+
+    aNextGames.push(oData);
+  }
+
+  return aNextGames;
+}
+
+/**
+ * Fetches schedule data from NHL api.
+ *
+ * @param {Object} oTeamData
+ * @return {Object}
+ */
+async function fetchScheduleData(oTeamData) {
+  const sMyTeamId = oTeamData[MY_NHL_TEAM].id;
+  const dStartDate = new Date();
+  const iYear = dStartDate.getFullYear();
+  const iMonth = dStartDate.getMonth() + 1;
+  const iDay = dStartDate.getDate();
+  const sFormattedDate = iYear + "-" + iMonth + "-" + iDay;
+  const sUrl = `https://statsapi.web.nhl.com/api/v1/schedule?startDate=${sFormattedDate}&endDate=2021-12-30&teamId=${sMyTeamId}&expand=schedule.teams,schedule.venue,schedule.metadata,schedule.ticket,schedule.broadcasts.all`;
+  const oRequest = new Request(sUrl);
+  return await oRequest.loadJSON();
+}
+
+/**
+ * Fetches top scorer data from NHL api.
+ *
+ * @param {string} sTeamId
+ * @return {Object}
+ */
+async function fetchTopScorer(sTeamId) {
+  const sUrl = `https://statsapi.web.nhl.com/api/v1/teams/${sTeamId}?expand=team.leaders,leaders.person&leaderGameTypes=R&leaderCategories=points`;
+  const oRequest = new Request(sUrl);
+  const oTopScorer = await oRequest.loadJSON();
+
+  return oTopScorer.teams[0].teamLeaders[0].leaders[0];
+}
+
+/**
+ * Loads image from thesportsdb.com or from local cache.
+ *
+ * @param {String} sImageUrl
+ * @param {String} sTeamAbbreviation
+ * @return {Object}
+ */
+async function loadLogo(sImageUrl, sTeamAbbreviation) {
+  // Set up the file manager.
+  const oFiles = FileManager.local();
+
+  // Set up cache
+  const sCachePath = oFiles.joinPath(
+    oFiles.cacheDirectory(),
+    sTeamAbbreviation
+  );
+  const bCacheExists = oFiles.fileExists(sCachePath);
+
+  let oResult;
+  try {
+    if (bCacheExists) {
+      oResult = oFiles.readImage(sCachePath);
+    } else {
+      const oRequest = new Request(sImageUrl);
+      oResult = await oRequest.loadImage();
+      try {
+        oFiles.writeImage(sCachePath, oResult);
+        console.log("Created cache entry for logo of " + sTeamAbbreviation);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  } catch (oError) {
+    console.error(oError);
+    if (bCacheExists) {
+      oResult = oFiles.readImage(sCachePath);
+    } else {
+      console.log("Fetching logo for " + sTeamAbbreviation + " failed.");
+    }
+  }
+
+  return oResult;
+}
+
+/**
+ * Sets background for stack.
+ *
+ * @param {String} oStack
+ */
+async function setStackBackground(oStack) {
+  if (
+    NO_BACKGROUND_INSTALLED &&
+    NO_BACKGROUND_ACTIVE &&
+    NO_BACKGROUND_FULL_ACTIVE
+  ) {
+    oStack.backgroundImage = await transparent(Script.name());
+  } else {
+    oStack.backgroundColor = STACK_BACKGROUND;
+  }
+}
+
+/**
+ * Returns color object depending if dark mode is active or not.
+ *
+ * @return {Object}
+ */
+function getColorForCurrentAppearance() {
+  return DARK_MODE ? Color.white() : Color.black();
+}
+
+/**
+ * Placeholder function when no-background.js isn't installed.
+ *
+ * @return {Object}
+ */
+function emptyFunction() {
+  // Silence
+  return {};
+}
+
+/**
+ * Returns static team data.
+ *
+ * @return {Object}
+ */
+function getTeamData() {
+  return {
+    // New Jersey Devils
+    NJD: {
+      id: "1",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/ssppey1547160174.png/preview",
+    },
+    // New York Islanders
+    NYI: {
+      id: "2",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/kj8uh41546001378.png/preview",
+    },
+    // New York Rangers
+    NYR: {
+      id: "3",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/bez4251546192693.png/preview",
+    },
+    // Philadelphia Flyers
+    PHI: {
+      id: "4",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/qxxppp1421794965.png/preview",
+    },
+    // Pittsburgh Penguins
+    PIT: {
+      id: "5",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/dsj3on1546192477.png/preview",
+    },
+    // Boston Bruins
+    BOS: {
+      id: "6",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/vuspuq1421791546.png/preview",
+    },
+    // Buffalo Sabres
+    BUF: {
+      id: "7",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/qrutxx1426461247.png/preview",
+    },
+    // Montréal Canadiens
+    MTL: {
+      id: "8",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/stpryx1421791753.png/preview",
+    },
+    // Ottawa Senators
+    OTT: {
+      id: "9",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/qurpwu1421616521.png/preview",
+    },
+    // Toronto Maple Leafs
+    TOR: {
+      id: "10",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/mxig4p1570129307.png/preview",
+    },
+    // Carolina Hurricanes
+    CAR: {
+      id: "12",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/v07m3x1547232585.png/preview",
+    },
+    // Florida Panthers
+    FLA: {
+      id: "13",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/8qtaz11547158220.png/preview",
+    },
+    // Tampa Bay Lightning
+    TBL: {
+      id: "14",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/swysut1421791822.png/preview",
+    },
+    // Washington Capitals
+    WSH: {
+      id: "15",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/u17iel1547157581.png/preview",
+    },
+    // Chicago Blackhawks
+    CHI: {
+      id: "16",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/tuwyvr1422041801.png/preview",
+    },
+    // Detroit Red Wings
+    DET: {
+      id: "17",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/1c24ow1546544080.png/preview",
+    },
+    // Nashville Predators
+    NSH: {
+      id: "18",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/twqyvy1422052908.png/preview",
+    },
+    // St. Louis Blues
+    STL: {
+      id: "19",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/rsqtwx1422053715.png/preview",
+    },
+    // Calgary Flames
+    CGY: {
+      id: "20",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/yqptxx1421869532.png/preview",
+    },
+    // Colorado Avalanche
+    COL: {
+      id: "21",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/wqutut1421173572.png/preview",
+    },
+    // Edmonton Oilers
+    EDM: {
+      id: "22",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/uxxsyw1421618428.png/preview",
+    },
+    // Vancouver Canucks
+    VAN: {
+      id: "23",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/xqxxpw1421875519.png/preview",
+    },
+    // Anaheim Ducks
+    ANA: {
+      id: "24",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/6g9t721547289240.png/preview",
+    },
+    // Dallas Stars
+    DAL: {
+      id: "25",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/qrvywq1422042125.png/preview",
+    },
+    // Los Angeles Kings
+    LAK: {
+      id: "26",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/uvwtvx1421535024.png/preview",
+    },
+    // San Jose Sharks
+    SJS: {
+      id: "28",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/yui7871546193006.png/preview",
+    },
+    // Columbus Blue Jackets
+    CBJ: {
+      id: "29",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/ssytwt1421792535.png/preview",
+    },
+    // Minnesota Wild
+    MIN: {
+      id: "30",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/swtsxs1422042685.png/preview",
+    },
+    // Winnipeg Jets
+    WPG: {
+      id: "52",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/bwn9hr1547233611.png/preview",
+    },
+    // Arizona Coyotes
+    ARI: {
+      id: "53",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/wpxpsx1421868857.png/preview",
+    },
+    // Vegas Golden Knights
+    VGK: {
+      id: "54",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/9w7peh1507632324.png/preview",
+    },
+  };
+}
