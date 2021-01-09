@@ -53,3 +53,12 @@ with
 ```
 const SHOW_LIVE_SCORES = false;
 ```
+### How to disable link to NHL app?
+Replace
+```
+const WIDGET_URL = "nhl://";
+```
+with
+```
+const WIDGET_URL = "";
+```
