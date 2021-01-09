@@ -174,6 +174,7 @@ async function addWidgetData(oWidget) {
         `${oGameData.homeTeam.goals}`
       );
       oHomeTeamGoalsText.font = Font.boldSystemFont(35);
+      oHomeTeamGoalsText.textColor = getColorForCurrentAppearance();
     }
 
     const oHomeTeamStatsText = oHomeTeamStack.addText(
@@ -224,6 +225,7 @@ async function addWidgetData(oWidget) {
         `${oGameData.awayTeam.goals}`
       );
       oAwayTeamGoalsText.font = Font.boldSystemFont(35);
+      oAwayTeamGoalsText.textColor = getColorForCurrentAppearance();
     }
 
     const oAwayTeamStatsText = oAwayTeamStack.addText(
