@@ -73,3 +73,13 @@ const WIDGET_URL = "";
 ```
 ### How can I get future updates for this widget?
 Just head over to [this](https://forms.gle/4SBmYLcVgzFak7SZ9) GoogleForm, type your email address and I'll send you an email when a new update is released.
+
+### How to support the project?
+As some users asked how to donate to the project I created this section:
+
+Of course I won't take anything for the widget, but if you really want to donate, feel free to buy me a coffee via paypal.
+
+<p align="center">
+<a href="http://paypal.me/thisisevanfox" target="_blank"><img src="https://camo.githubusercontent.com/74865d9b3ad7b0a216f64653cee3d2027790220fb7b0302cf693e5a9e7c20c7a/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f70617970616c2d646f6e6174652d79656c6c6f772e737667" alt="Donate via Paypal" border="0" /></a>
+</p>  
+
