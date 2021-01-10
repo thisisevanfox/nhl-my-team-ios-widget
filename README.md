@@ -1,3 +1,4 @@
+
 # "NHL-MyTeam" Scriptable iOS widget  🏒
 I created a widget for iOS and the [Scriptable.app](https://scriptable.app/) to always see on the homescreen of my iPhone when the next games are up for my favorite NHL team.
 
@@ -7,8 +8,9 @@ I created a widget for iOS and the [Scriptable.app](https://scriptable.app/) to 
 2.  [Getting started with the widget](https://github.com/thisisevanfox/nhl-my-team-ios-widget#getting-started-with-the-widget-) 🚀
 3.  [Register for updates](https://github.com/thisisevanfox/nhl-my-team-ios-widget#register-for-updates-) 📥
 4.  [Frequently Asked Questions (FAQs)](https://github.com/thisisevanfox/nhl-my-team-ios-widget#frequently-asked-questions-faqs-) ❓
-5. [Bugs](https://github.com/thisisevanfox/nhl-my-team-ios-widget#bugs-) 🐞
-6. [References](https://github.com/thisisevanfox/nhl-my-team-ios-widget#references-) 🏆
+5. [Support the project](https://github.com/thisisevanfox/nhl-my-team-ios-widget#support-the-project-) 💪
+6. [Bugs](https://github.com/thisisevanfox/nhl-my-team-ios-widget#bugs-) 🐞
+7. [References](https://github.com/thisisevanfox/nhl-my-team-ios-widget#references-) 🏆
 
 ## Features 💡      
 <p align="center">
@@ -43,6 +45,15 @@ Don't want to miss a update for this widget? Just head over to [this](https://fo
    
 ## Frequently Asked Questions (FAQs) ❓
 All Frequently Asked Question are collected [here](https://github.com/thisisevanfox/nhl-my-team-ios-widget/blob/main/FAQ.md).
+
+## Support the project 💪
+As some users asked how to donate to the project I created this section:
+
+Of course I won't take anything for the widget, but if you really want to donate, feel free to buy me a coffee via paypal.
+
+<p align="center">
+<a href="http://paypal.me/thisisevanfox" target="_blank"><img src="https://camo.githubusercontent.com/74865d9b3ad7b0a216f64653cee3d2027790220fb7b0302cf693e5a9e7c20c7a/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f70617970616c2d646f6e6174652d79656c6c6f772e737667" alt="Donate via Paypal" border="0" /></a>
+</p>  
 
 ## Bugs 🐞
 Found a bug? Feel free to create a issue.
