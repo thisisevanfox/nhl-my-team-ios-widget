@@ -1,4 +1,5 @@
 
+
 # "NHL-MyTeam" Scriptable iOS widget  🏒
 I created a widget for iOS and the [Scriptable.app](https://scriptable.app/) to always see on the homescreen of my iPhone when the next games are up for my favorite NHL team.
 
@@ -14,18 +15,21 @@ I created a widget for iOS and the [Scriptable.app](https://scriptable.app/) to 
 
 ## Features 💡      
 <p align="center">
-<a href="https://i.ibb.co/FJBk6Xj/Nhl-My-Team-Screenshot-Big.png"><img src="https://i.ibb.co/0yMQLLZ/Nhl-My-Team-Screenshot-Small.png" alt="Widget supports light- and dark-mode" border="0" /></a>
+<a href="https://i.ibb.co/m4B9KPz/Screenshotv3.png"><img src="https://i.ibb.co/Ctjf1gc/Screenshotv3small.png" alt="Widget supports light- and dark-mode" border="0" /></a>
 </p>  
-                                                                    
-* Shows date and time of next game (local timezone)
-* Shows city where the next game takes place
-* Show live score of next game. "Live" depends on how often the widget on the homescreen updates itself. It is not possible to say exactly, when it updates.
-* Shows stats of both teams (wins, losses, overtime losses)
-* Shows top scorer of your team and the opponent (currently of last season, it will update after the first game)
-* Shows next 4 games with date
-* Caches logos to save data volume.
-* Supports light- and dark-mode
-* Supports [no-background.js](https://github.com/supermamon/scriptable-no-background)
+
+Since v3 small (2x2) and medium (4x2) sized widgets are supported. Some features are not available in the small widget. I have written in the brackets after the features in which variant it is available.
+                                                     
+* Shows date and time of next game (local timezone) (Small + Medium)
+* Shows city where the next game takes place (Small + Medium)
+* Show live score of next game. "Live" depends on how often the widget on the homescreen updates itself. It is not possible to say exactly, when it updates. (Medium)
+* Shows stats of both teams (wins, losses, overtime losses) (Small + Medium) 
+* Shows standings of both teams (Small + Medium)
+* Shows top scorer of your team and the opponent (currently of last season, it will update after the first game)  (Small + Medium)
+* Shows next 4 games with date (Medium)
+* Caches logos to save data volume (Small + Medium)  
+* Supports light- and dark-mode (Small + Medium) 
+* Supports [no-background.js](https://github.com/supermamon/scriptable-no-background) (Medium)
 
 Note: I don't know how the api displays the games when it comes to playoffs. I'll have to check again when the season is at this point.
 
@@ -39,6 +43,8 @@ You want to have more information on the releases? Check the [changelog](https:/
 5. Add a Scriptable-widget to your homescreen.
    * Add it with size "medium".
    * Make sure to choose "Run script" for "When Interacting".
+
+Having troubles with installing? Check the detailed installation guide [here](https://github.com/thisisevanfox/nhl-my-team-ios-widget/blob/main/Installation%20guide.md). For german users the installation guide can be found [here](https://github.com/thisisevanfox/nhl-my-team-ios-widget/blob/main/Installationsanleitung.md).
    
 ## Register for updates 📥
 Don't want to miss a update for this widget? Just head over to [this](https://forms.gle/4SBmYLcVgzFak7SZ9) GoogleForm, type your email address and I'll send you an email when a new update is released.
