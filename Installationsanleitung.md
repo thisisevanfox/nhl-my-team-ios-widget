@@ -17,7 +17,7 @@ Im Script sucht man dann die Zeile "const MY_NHL_TEAM = "ENTER_TEAM_ABBREVIATION
 Man wechselt zu seinem Homebildschirm auf dem iPhone und "klickt und hält", wählt dann "Homebildschirm bearbeiten" und klickt oben rechts auf das "+". Dann sucht man nach Scriptable und wählt es. 
 
 ## 6. Schritt: 
-Man hat nun die Möglichkeit die Größe des Widgets festzulegen. Aktuell ist nur die mittlere Größe verfügbar. Man muss also einmal nach rechts wischen und wählt dann "Widget hinzufügen". Man landet dann wieder am Homebildschirm und man sieht ein Widget in dem "Select script in widget configurator" steht man klickt dann auf dieses Widget, es öffnet sich ein Fenster. Falls sich stattdessen die Scriptable-App öffnet, muss man zurück zum Homebildschirm und beim Widget "klicken und halten", "Homebildschirm bearbeiten" und dann nochmal aufs Widget klicken. 
+Man hat nun die Möglichkeit die Größe des Widgets festzulegen. Aktuell sind nur die kleine und mittlere Größe verfügbar. Für die mittlere Größe muss man einmal nach rechts wischen und wählt dann "Widget hinzufügen". Man landet dann wieder am Homebildschirm und man sieht ein Widget in dem "Select script in widget configurator" steht man klickt dann auf dieses Widget, es öffnet sich ein Fenster. Falls sich stattdessen die Scriptable-App öffnet, muss man zurück zum Homebildschirm und beim Widget "klicken und halten", "Homebildschirm bearbeiten" und dann nochmal aufs Widget klicken. 
 
 ## 7. Schritt: 
 In diesem Fenster wählt man dann für Script das "NHL-MyTeam-Widget" und für When Interacting "Run Script". 
