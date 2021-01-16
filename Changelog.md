@@ -11,6 +11,7 @@
 - I noticed that the update of W-L-OTL stats takes a long time, so I changed the API endpoint where this data is fetched.
 ### Minor fixes:
 - Updated the logo of Buffalo Sabres.
+- Updated livescore: When game has not started yet, it displays "-" instead of "0"
 
 ## v2
 ### New features:
