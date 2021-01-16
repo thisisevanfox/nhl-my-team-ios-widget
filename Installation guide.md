@@ -17,7 +17,7 @@ In the script you then look for the line "const MY_NHL_TEAM = "ENTER_TEAM_ABBREV
 You go to your home screen on your iPhone and "click and hold", then select "Edit Home Screen" and click the "+" in the top right corner. Then you search for Scriptable and select it. 
 
 ## Step 6:
-Now you have the possibility to set the size of the widget. Currently, only the medium size is available. So you have to swipe to the right once and then select "Add widget". You then land back on the home screen and you see a widget in which "Select script in widget configurator" is then click on this widget, a window opens. If the Scriptable app opens instead, you have to go back to the home screen and "click and hold" on the widget, "Edit home screen" and then click on the widget again. 
+Now you have the possibility to set the size of the widget. Currently, only the small and medium size are available. For the medium size you have to swipe to the right once and then select "Add widget". You then land back on the home screen and you see a widget in which "Select script in widget configurator" is then click on this widget, a window opens. If the Scriptable app opens instead, you have to go back to the home screen and "click and hold" on the widget, "Edit home screen" and then click on the widget again. 
 
 ## Step 7:
 In this window, select the "NHL-MyTeam-Widget" for Script and "Run Script" for When Interacting. 
