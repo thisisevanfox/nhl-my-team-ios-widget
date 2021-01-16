@@ -9,7 +9,7 @@ I created a widget for iOS and the [Scriptable.app](https://scriptable.app/) to 
 2.  [Getting started with the widget](https://github.com/thisisevanfox/nhl-my-team-ios-widget#getting-started-with-the-widget-) 🚀
 3.  [Register for updates](https://github.com/thisisevanfox/nhl-my-team-ios-widget#register-for-updates-) 📥
 4.  [Frequently Asked Questions (FAQs)](https://github.com/thisisevanfox/nhl-my-team-ios-widget#frequently-asked-questions-faqs-) ❓
-5. [Support the project 💪 / Buy me a coffee ☕](https://github.com/thisisevanfox/nhl-my-team-ios-widget#support-the-project-) 💪
+5. [Support the project 💪 / Buy me a coffee ☕](https://github.com/thisisevanfox/nhl-my-team-ios-widget#support-the-project---buy-me-a-coffee-)
 6. [Bugs](https://github.com/thisisevanfox/nhl-my-team-ios-widget#bugs-) 🐞
 7. [References](https://github.com/thisisevanfox/nhl-my-team-ios-widget#references-) 🏆
 
