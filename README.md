@@ -9,7 +9,7 @@ I created a widget for iOS and the [Scriptable.app](https://scriptable.app/) to 
 2.  [Getting started with the widget](https://github.com/thisisevanfox/nhl-my-team-ios-widget#getting-started-with-the-widget-) 🚀
 3.  [Register for updates](https://github.com/thisisevanfox/nhl-my-team-ios-widget#register-for-updates-) 📥
 4.  [Frequently Asked Questions (FAQs)](https://github.com/thisisevanfox/nhl-my-team-ios-widget#frequently-asked-questions-faqs-) ❓
-5. [Support the project](https://github.com/thisisevanfox/nhl-my-team-ios-widget#support-the-project-) 💪
+5. [Support the project 💪 / Buy me a coffee ☕](https://github.com/thisisevanfox/nhl-my-team-ios-widget#support-the-project-) 💪
 6. [Bugs](https://github.com/thisisevanfox/nhl-my-team-ios-widget#bugs-) 🐞
 7. [References](https://github.com/thisisevanfox/nhl-my-team-ios-widget#references-) 🏆
 
@@ -52,7 +52,7 @@ Don't want to miss a update for this widget? Just head over to [this](https://fo
 ## Frequently Asked Questions (FAQs) ❓
 All Frequently Asked Question are collected [here](https://github.com/thisisevanfox/nhl-my-team-ios-widget/blob/main/FAQ.md).
 
-## Support the project 💪
+## Support the project 💪 / Buy me a coffee ☕
 As some users asked how to donate to the project I created this section:
 
 Of course I won't take anything for the widget, but if you really want to donate, feel free to buy me a coffee via paypal.
