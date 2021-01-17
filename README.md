@@ -12,6 +12,7 @@ I created a widget for iOS and the [Scriptable.app](https://scriptable.app/) to 
 5. [Support the project 💪 / Buy me a coffee ☕](https://github.com/thisisevanfox/nhl-my-team-ios-widget#support-the-project---buy-me-a-coffee-)
 6. [Bugs](https://github.com/thisisevanfox/nhl-my-team-ios-widget#bugs-) 🐞
 7. [References](https://github.com/thisisevanfox/nhl-my-team-ios-widget#references-) 🏆
+8. [Disclaimer](https://github.com/thisisevanfox/nhl-my-team-ios-widget#disclaimer)
 
 ## Features 💡      
 <p align="center">
@@ -65,4 +66,7 @@ Of course I won't take anything for the widget, but if you really want to donate
 Found a bug? Feel free to create a issue.
 
 ## References 🏆
-I used the publicly accessible NHL api which is documented by  [dword4](https://gitlab.com/dword4/nhlapi). The logos are taken from [thesportsdb.com](https://thesportsdb.com). 
+I used the publicly accessible NHL api which is documented by [dword4](https://gitlab.com/dword4/nhlapi). The logos are taken from [thesportsdb.com](https://thesportsdb.com). 
+
+## Disclaimer
+This is a project developed by myself. It is not an official widget of the NHL. I have no relationship with the NHL.
