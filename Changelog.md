@@ -1,4 +1,8 @@
 # Changelog
+## v3.0.1
+### Bugfix:
+- Fixed a bug, when goals from the shootout were not counted. So the widget showed a tied game.
+
 ## v3
 ### New features:
 - Added current division and league standings to widget
