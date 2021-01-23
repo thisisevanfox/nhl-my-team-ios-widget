@@ -621,7 +621,7 @@ async function prepareData() {
         const oLiveData = await fetchLiveData(oNextGame.gamePk);
         if (oLiveData) {
           const oLineScore = oLiveData["linescore"];
-          const bIsShoutout = oLineScore.hasShootout;
+          const bIsShootout = oLineScore.hasShootout;
           if (oLineScore) {
             oData.currentPeriod = oLineScore.currentPeriod;
             oData.currentPeriodOrdinal = oLineScore.currentPeriodOrdinal;
@@ -635,7 +635,7 @@ async function prepareData() {
           ) {
             oData.homeTeam.goals =
               oBoxScoreTeams.home.teamStats.teamSkaterStats.goals;
-              if(bIsShoutout){
+              if(bIsShootout){
                 oData.homeTeam.goals = oLineScore.shootoutInfo.home.scores + oData.homeTeam.goals;
               }
           }
@@ -646,7 +646,7 @@ async function prepareData() {
           ) {
             oData.awayTeam.goals =
               oBoxScoreTeams.away.teamStats.teamSkaterStats.goals;
-              if(bIsShoutout){
+              if(bIsShootout){
                 oData.awayTeam.goals = oLineScore.shootoutInfo.away.scores + oData.awayTeam.goals;
               }
           }
