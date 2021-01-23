@@ -4,11 +4,12 @@
 
 /********************************************************
  * script     : NHL-MyTeam-Widget.js
- * version    : 3.0.0
+ * version    : 3.0.1
  * description: Widget for Scriptable.app, which shows
  *              the next games for your NHL team
  * author     : @thisisevanfox
- * date       : 2021-01-16
+ * support    : https://git.io/JtkA1
+ * date       : 2021-01-23
  *******************************************************/
 
 /********************************************************
@@ -620,6 +621,7 @@ async function prepareData() {
         const oLiveData = await fetchLiveData(oNextGame.gamePk);
         if (oLiveData) {
           const oLineScore = oLiveData["linescore"];
+          const bIsShoutout = oLineScore.hasShootout;
           if (oLineScore) {
             oData.currentPeriod = oLineScore.currentPeriod;
             oData.currentPeriodOrdinal = oLineScore.currentPeriodOrdinal;
@@ -633,6 +635,9 @@ async function prepareData() {
           ) {
             oData.homeTeam.goals =
               oBoxScoreTeams.home.teamStats.teamSkaterStats.goals;
+              if(bIsShoutout){
+                oData.homeTeam.goals = oLineScore.shootoutInfo.home.scores + oData.homeTeam.goals;
+              }
           }
 
           if (
@@ -641,6 +646,9 @@ async function prepareData() {
           ) {
             oData.awayTeam.goals =
               oBoxScoreTeams.away.teamStats.teamSkaterStats.goals;
+              if(bIsShoutout){
+                oData.awayTeam.goals = oLineScore.shootoutInfo.away.scores + oData.awayTeam.goals;
+              }
           }
         }
       }
