@@ -1,4 +1,8 @@
 # Changelog
+## v3.0.2
+### Bugfix:
+- Fixed a bug where the widget would crash if no venue was supplied. Now, if no venue is supplied, none is displayed.
+
 ## v3.0.1
 ### Bugfix:
 - Fixed a bug, when goals from the shootout were not counted. So the widget showed a tied game.
