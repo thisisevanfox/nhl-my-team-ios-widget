@@ -4,12 +4,12 @@
 
 /********************************************************
  * script     : NHL-MyTeam-Widget.js
- * version    : 3.0.1
+ * version    : 3.0.2
  * description: Widget for Scriptable.app, which shows
  *              the next games for your NHL team
  * author     : @thisisevanfox
  * support    : https://git.io/JtkA1
- * date       : 2021-01-23
+ * date       : 2021-01-24
  *******************************************************/
 
 /********************************************************
@@ -182,9 +182,11 @@ async function addSmallWidgetData(oWidget) {
     );
     oGameTimeText.font = Font.boldSystemFont(11);
     oGameTimeText.textColor = getColorForCurrentAppearance();
-    const oVenueText = oUpperTextStack.addText(`@ ${oGameData.venue}`);
-    oVenueText.font = Font.boldSystemFont(11);
-    oVenueText.textColor = getColorForCurrentAppearance();
+    if (oGameData.venue != "") {
+      const oVenueText = oUpperTextStack.addText(`@ ${oGameData.venue}`);
+      oVenueText.font = Font.boldSystemFont(11);
+      oVenueText.textColor = getColorForCurrentAppearance();
+    }
 
     oUpperStack.addSpacer();
 
@@ -334,9 +336,8 @@ async function addMediumWidgetData(oWidget) {
         hour: "2-digit",
         minute: "2-digit",
       });
-      oHeadingText = oHeadingStack.addText(
-        `${dLocalDate} @ ${oGameData.venue}`
-      );
+      const sVenueText = oGameData.venue != "" ? ` @ ${oGameData.venue}` : ``;
+      oHeadingText = oHeadingStack.addText(`${dLocalDate}${sVenueText}`);
     }
     oHeadingText.font = Font.boldSystemFont(11);
     oHeadingText.textColor = getColorForCurrentAppearance();
@@ -597,9 +598,11 @@ async function prepareData() {
       );
 
       oData.gameDate = oNextGame.gameDate;
-      oData.venue = oNextGame.venue.city
-        ? oNextGame.venue.city
-        : oNextGame.venue.location.city;
+      if (oNextGame.venue) {
+        oData.venue = oNextGame.venue.city
+          ? oNextGame.venue.city
+          : oNextGame.venue.location.city;
+      }
       oData.nextGames = getNextGames(oScheduleData.dates, oTeamData);
       oData.homeTeam.abbreviation = oHomeTeam.team.abbreviation;
       oData.homeTeam.logoLink = oTeamData[oData.homeTeam.abbreviation].logo;
@@ -635,9 +638,10 @@ async function prepareData() {
           ) {
             oData.homeTeam.goals =
               oBoxScoreTeams.home.teamStats.teamSkaterStats.goals;
-              if(bIsShootout){
-                oData.homeTeam.goals = oLineScore.shootoutInfo.home.scores + oData.homeTeam.goals;
-              }
+            if (bIsShootout) {
+              oData.homeTeam.goals =
+                oLineScore.shootoutInfo.home.scores + oData.homeTeam.goals;
+            }
           }
 
           if (
@@ -646,9 +650,10 @@ async function prepareData() {
           ) {
             oData.awayTeam.goals =
               oBoxScoreTeams.away.teamStats.teamSkaterStats.goals;
-              if(bIsShootout){
-                oData.awayTeam.goals = oLineScore.shootoutInfo.away.scores + oData.awayTeam.goals;
-              }
+            if (bIsShootout) {
+              oData.awayTeam.goals =
+                oLineScore.shootoutInfo.away.scores + oData.awayTeam.goals;
+            }
           }
         }
       }
