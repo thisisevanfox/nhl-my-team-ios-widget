@@ -1,4 +1,12 @@
 # Changelog
+## v3.1.0
+### New features:
+- Added new setting SHOW_HOME_TEAM_FIRST. As u/TwentyFour7 on reddit explained to me that in the US the syntax for a game always is "away team @ home team" I introduced this setting. As I live in Europe, where the home team always is mentioned first, the setting is default to the european way, so you have to set it to false if you want the US layout.
+
+### Bugfixes:
+- Fixed display of time in small widget. Widget won't crash if something goes wrong.
+- Date is now displayed with two digits.
+
 ## v3.0.2
 ### Bugfix:
 - Fixed a bug where the widget would crash if no venue was supplied. Now, if no venue is supplied, none is displayed.
