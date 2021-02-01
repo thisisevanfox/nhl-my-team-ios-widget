@@ -4,12 +4,12 @@
 
 /********************************************************
  * script     : NHL-MyTeam-Widget.js
- * version    : 3.0.2
+ * version    : 3.1.0
  * description: Widget for Scriptable.app, which shows
  *              the next games for your NHL team
  * author     : @thisisevanfox
  * support    : https://git.io/JtkA1
- * date       : 2021-01-24
+ * date       : 2021-02-01
  *******************************************************/
 
 /********************************************************
@@ -33,6 +33,11 @@ const SHOW_LIVE_SCORES = true;
 // If you don't want to be spoilered set it to false.
 // Default: true
 const SHOW_STATS_AND_STANDINGS = true;
+
+// Indicator if the home team should show first (like it's common in Europe)
+// Default: true (home team shows first, e.g. "home - away")
+// false (away team shows first, e.g. "away @ home")
+const SHOW_HOME_TEAM_FIRST = true;
 
 // URL to shares app
 // Default: "nhl://" (Official NHL app)
@@ -89,10 +94,10 @@ if (config.runsInWidget) {
 } else {
   oNhlWidget = await createMediumWidget();
   oNhlWidget.presentMedium();
-  oNhlWidget = await createSmallWidget();
-  oNhlWidget.presentSmall();
-  oNhlWidget = await createLargeWidget();
-  oNhlWidget.presentLarge();
+  // oNhlWidget = await createSmallWidget();
+  // oNhlWidget.presentSmall();
+  // oNhlWidget = await createLargeWidget();
+  // oNhlWidget.presentLarge();
 }
 
 /**
@@ -168,7 +173,7 @@ async function addSmallWidgetData(oWidget) {
     const dLocalDate = dGameDate.toLocaleString([], {
       year: "numeric",
       month: "2-digit",
-      day: "numeric",
+      day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
     });
@@ -177,11 +182,15 @@ async function addSmallWidgetData(oWidget) {
     );
     oGameDateText.font = Font.boldSystemFont(11);
     oGameDateText.textColor = getColorForCurrentAppearance();
-    const oGameTimeText = oUpperTextStack.addText(
-      `${dLocalDate.split(",")[1].trim()}`
-    );
-    oGameTimeText.font = Font.boldSystemFont(11);
-    oGameTimeText.textColor = getColorForCurrentAppearance();
+
+    if (!!dLocalDate.split(",")[1]) {
+      const oGameTimeText = oUpperTextStack.addText(
+        `${dLocalDate.split(",")[1].trim()}`
+      );
+      oGameTimeText.font = Font.boldSystemFont(11);
+      oGameTimeText.textColor = getColorForCurrentAppearance();
+    }
+
     if (oGameData.venue != "") {
       const oVenueText = oUpperTextStack.addText(`@ ${oGameData.venue}`);
       oVenueText.font = Font.boldSystemFont(11);
@@ -332,7 +341,7 @@ async function addMediumWidgetData(oWidget) {
       const dLocalDate = dGameDate.toLocaleString([], {
         year: "numeric",
         month: "2-digit",
-        day: "numeric",
+        day: "2-digit",
         hour: "2-digit",
         minute: "2-digit",
       });
@@ -354,127 +363,15 @@ async function addMediumWidgetData(oWidget) {
     oNextGameStack.layoutHorizontally();
     oNextGameStack.cornerRadius = 12;
 
-    const oHomeTeamStack = oNextGameStack.addStack();
-    oHomeTeamStack.layoutVertically();
-    oHomeTeamStack.centerAlignContent();
-    oHomeTeamStack.setPadding(7, 7, 7, 7);
-    await setStackBackground(oHomeTeamStack);
-    oHomeTeamStack.cornerRadius = 12;
-    oHomeTeamStack.size = new Size(150, 0);
-
-    const oHomeTeamLogoStack = oHomeTeamStack.addStack();
-    oHomeTeamLogoStack.layoutHorizontally();
-
-    const oHomeLogoImage = await loadLogo(
-      oGameData.homeTeam.logoLink,
-      oGameData.homeTeam.abbreviation
-    );
-    const oHomeLogo = oHomeTeamLogoStack.addImage(oHomeLogoImage);
-    oHomeLogo.imageSize = new Size(40, 40);
-
-    if (SHOW_LIVE_SCORES) {
-      oHomeTeamLogoStack.addSpacer(45);
-      const oHomeTeamGoalsText = oHomeTeamLogoStack.addText(
-        oGameData.currentPeriod === 0 ? `-` : `${oGameData.homeTeam.goals}`
-      );
-      oHomeTeamGoalsText.font = Font.boldSystemFont(35);
-      oHomeTeamGoalsText.textColor = getColorForCurrentAppearance();
+    if (SHOW_HOME_TEAM_FIRST) {
+      await addHomeTeamStack(oNextGameStack, oGameData);
+      oNextGameStack.addSpacer();
+      await addAwayTeamStack(oNextGameStack, oGameData);
+    } else {
+      await addAwayTeamStack(oNextGameStack, oGameData);
+      oNextGameStack.addSpacer();
+      await addHomeTeamStack(oNextGameStack, oGameData);
     }
-
-    if (SHOW_STATS_AND_STANDINGS) {
-      const oHomeTeamStatsText = oHomeTeamStack.addText(
-        "W: " +
-          oGameData.homeTeam.record.wins +
-          " - L: " +
-          oGameData.homeTeam.record.losses +
-          " - OTL: " +
-          oGameData.homeTeam.record.ot
-      );
-      oHomeTeamStatsText.font = Font.systemFont(11);
-      oHomeTeamStatsText.textColor = getColorForCurrentAppearance();
-
-      const oHomeTeamStandingsText = oHomeTeamStack.addText(
-        "Division: " +
-          oGameData.homeTeam.record.divisionRank +
-          "." +
-          " | League: " +
-          oGameData.homeTeam.record.leagueRank +
-          "."
-      );
-      oHomeTeamStandingsText.font = Font.systemFont(9);
-      oHomeTeamStandingsText.textColor = getColorForCurrentAppearance();
-
-      if (oGameData.homeTeam.topscorer.name != null) {
-        const oHomeTeamTopScorerText = oHomeTeamStack.addText(
-          `${oGameData.homeTeam.topscorer.name} (${oGameData.homeTeam.topscorer.points})`
-        );
-        oHomeTeamTopScorerText.centerAlignText();
-        oHomeTeamTopScorerText.font = Font.systemFont(9);
-        oHomeTeamTopScorerText.textColor = getColorForCurrentAppearance();
-      }
-    }
-    oNextGameStack.addSpacer();
-
-    const oAwayTeamStack = oNextGameStack.addStack();
-    oAwayTeamStack.layoutVertically();
-    oAwayTeamStack.centerAlignContent();
-    oAwayTeamStack.setPadding(7, 7, 7, 7);
-    await setStackBackground(oAwayTeamStack);
-    oAwayTeamStack.cornerRadius = 12;
-    oAwayTeamStack.size = new Size(150, 0);
-
-    const oAwayTeamLogoStack = oAwayTeamStack.addStack();
-    oAwayTeamLogoStack.layoutHorizontally();
-
-    const oAwayLogoImage = await loadLogo(
-      oGameData.awayTeam.logoLink,
-      oGameData.awayTeam.abbreviation
-    );
-    const oAwayLogo = oAwayTeamLogoStack.addImage(oAwayLogoImage);
-    oAwayLogo.imageSize = new Size(40, 40);
-
-    if (SHOW_LIVE_SCORES) {
-      oAwayTeamLogoStack.addSpacer(45);
-
-      const oAwayTeamGoalsText = oAwayTeamLogoStack.addText(
-        oGameData.currentPeriod === 0 ? `-` : `${oGameData.awayTeam.goals}`
-      );
-      oAwayTeamGoalsText.font = Font.boldSystemFont(35);
-      oAwayTeamGoalsText.textColor = getColorForCurrentAppearance();
-    }
-
-    if (SHOW_STATS_AND_STANDINGS) {
-      const oAwayTeamStatsText = oAwayTeamStack.addText(
-        "W: " +
-          oGameData.awayTeam.record.wins +
-          " - L: " +
-          oGameData.awayTeam.record.losses +
-          " - OTL: " +
-          oGameData.awayTeam.record.ot
-      );
-      oAwayTeamStatsText.font = Font.systemFont(11);
-      oAwayTeamStatsText.textColor = getColorForCurrentAppearance();
-
-      const oAwayTeamStandingsText = oAwayTeamStack.addText(
-        "Division: " +
-          oGameData.awayTeam.record.divisionRank +
-          "." +
-          " | League: " +
-          oGameData.awayTeam.record.leagueRank +
-          "."
-      );
-      oAwayTeamStandingsText.font = Font.systemFont(9);
-      oAwayTeamStandingsText.textColor = getColorForCurrentAppearance();
-
-      if (oGameData.awayTeam.topscorer.name != null) {
-        const oAwayTeamTopScorerText = oAwayTeamStack.addText(
-          `${oGameData.awayTeam.topscorer.name} (${oGameData.awayTeam.topscorer.points})`
-        );
-        oAwayTeamTopScorerText.font = Font.systemFont(9);
-        oAwayTeamTopScorerText.textColor = getColorForCurrentAppearance();
-      }
-    }
-
     oWidget.addSpacer();
 
     const oFutureGamesStack = oWidget.addStack();
@@ -503,7 +400,7 @@ async function addMediumWidgetData(oWidget) {
       const dGameDate = new Date(oNextGame.gameDate);
       const dLocalDate = dGameDate.toLocaleString([], {
         month: "2-digit",
-        day: "numeric",
+        day: "2-digit",
       });
       const oNextGameText = oFutureGame.addText(` ${dLocalDate}`);
       oNextGameText.font = Font.systemFont(11);
@@ -532,6 +429,142 @@ async function addMediumWidgetData(oWidget) {
     oSpacerStack2.addSpacer();
 
     oWidget.addSpacer();
+  }
+}
+
+/**
+ * Adds stack for home team to the medium sized widget.
+ *
+ * @param {Object} oNextGameStack
+ * @param {Object} oGameData
+ */
+async function addHomeTeamStack(oNextGameStack, oGameData) {
+  const oHomeTeamStack = oNextGameStack.addStack();
+  oHomeTeamStack.layoutVertically();
+  oHomeTeamStack.centerAlignContent();
+  oHomeTeamStack.setPadding(7, 7, 7, 7);
+  await setStackBackground(oHomeTeamStack);
+  oHomeTeamStack.cornerRadius = 12;
+  oHomeTeamStack.size = new Size(150, 0);
+
+  const oHomeTeamLogoStack = oHomeTeamStack.addStack();
+  oHomeTeamLogoStack.layoutHorizontally();
+
+  const oHomeLogoImage = await loadLogo(
+    oGameData.homeTeam.logoLink,
+    oGameData.homeTeam.abbreviation
+  );
+  const oHomeLogo = oHomeTeamLogoStack.addImage(oHomeLogoImage);
+  oHomeLogo.imageSize = new Size(40, 40);
+
+  if (SHOW_LIVE_SCORES) {
+    oHomeTeamLogoStack.addSpacer(45);
+    const oHomeTeamGoalsText = oHomeTeamLogoStack.addText(
+      oGameData.currentPeriod === 0 ? `-` : `${oGameData.homeTeam.goals}`
+    );
+    oHomeTeamGoalsText.font = Font.boldSystemFont(35);
+    oHomeTeamGoalsText.textColor = getColorForCurrentAppearance();
+  }
+
+  if (SHOW_STATS_AND_STANDINGS) {
+    const oHomeTeamStatsText = oHomeTeamStack.addText(
+      "W: " +
+        oGameData.homeTeam.record.wins +
+        " - L: " +
+        oGameData.homeTeam.record.losses +
+        " - OTL: " +
+        oGameData.homeTeam.record.ot
+    );
+    oHomeTeamStatsText.font = Font.systemFont(11);
+    oHomeTeamStatsText.textColor = getColorForCurrentAppearance();
+
+    const oHomeTeamStandingsText = oHomeTeamStack.addText(
+      "Division: " +
+        oGameData.homeTeam.record.divisionRank +
+        "." +
+        " | League: " +
+        oGameData.homeTeam.record.leagueRank +
+        "."
+    );
+    oHomeTeamStandingsText.font = Font.systemFont(9);
+    oHomeTeamStandingsText.textColor = getColorForCurrentAppearance();
+
+    if (oGameData.homeTeam.topscorer.name != null) {
+      const oHomeTeamTopScorerText = oHomeTeamStack.addText(
+        `${oGameData.homeTeam.topscorer.name} (${oGameData.homeTeam.topscorer.points})`
+      );
+      oHomeTeamTopScorerText.centerAlignText();
+      oHomeTeamTopScorerText.font = Font.systemFont(9);
+      oHomeTeamTopScorerText.textColor = getColorForCurrentAppearance();
+    }
+  }
+}
+
+/**
+ * Adds stack for away team to the medium sized widget.
+ *
+ * @param {Object} oNextGameStack
+ * @param {Object} oGameData
+ */
+async function addAwayTeamStack(oNextGameStack, oGameData) {
+  const oAwayTeamStack = oNextGameStack.addStack();
+  oAwayTeamStack.layoutVertically();
+  oAwayTeamStack.centerAlignContent();
+  oAwayTeamStack.setPadding(7, 7, 7, 7);
+  await setStackBackground(oAwayTeamStack);
+  oAwayTeamStack.cornerRadius = 12;
+  oAwayTeamStack.size = new Size(150, 0);
+
+  const oAwayTeamLogoStack = oAwayTeamStack.addStack();
+  oAwayTeamLogoStack.layoutHorizontally();
+
+  const oAwayLogoImage = await loadLogo(
+    oGameData.awayTeam.logoLink,
+    oGameData.awayTeam.abbreviation
+  );
+  const oAwayLogo = oAwayTeamLogoStack.addImage(oAwayLogoImage);
+  oAwayLogo.imageSize = new Size(40, 40);
+
+  if (SHOW_LIVE_SCORES) {
+    oAwayTeamLogoStack.addSpacer(45);
+
+    const oAwayTeamGoalsText = oAwayTeamLogoStack.addText(
+      oGameData.currentPeriod === 0 ? `-` : `${oGameData.awayTeam.goals}`
+    );
+    oAwayTeamGoalsText.font = Font.boldSystemFont(35);
+    oAwayTeamGoalsText.textColor = getColorForCurrentAppearance();
+  }
+
+  if (SHOW_STATS_AND_STANDINGS) {
+    const oAwayTeamStatsText = oAwayTeamStack.addText(
+      "W: " +
+        oGameData.awayTeam.record.wins +
+        " - L: " +
+        oGameData.awayTeam.record.losses +
+        " - OTL: " +
+        oGameData.awayTeam.record.ot
+    );
+    oAwayTeamStatsText.font = Font.systemFont(11);
+    oAwayTeamStatsText.textColor = getColorForCurrentAppearance();
+
+    const oAwayTeamStandingsText = oAwayTeamStack.addText(
+      "Division: " +
+        oGameData.awayTeam.record.divisionRank +
+        "." +
+        " | League: " +
+        oGameData.awayTeam.record.leagueRank +
+        "."
+    );
+    oAwayTeamStandingsText.font = Font.systemFont(9);
+    oAwayTeamStandingsText.textColor = getColorForCurrentAppearance();
+
+    if (oGameData.awayTeam.topscorer.name != null) {
+      const oAwayTeamTopScorerText = oAwayTeamStack.addText(
+        `${oGameData.awayTeam.topscorer.name} (${oGameData.awayTeam.topscorer.points})`
+      );
+      oAwayTeamTopScorerText.font = Font.systemFont(9);
+      oAwayTeamTopScorerText.textColor = getColorForCurrentAppearance();
+    }
   }
 }
 
