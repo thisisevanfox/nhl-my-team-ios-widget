@@ -26,6 +26,9 @@ Make sure you copy it until the following lines are marked:
  *******************************************************/
 ```
 
+### Sometimes the widget shows "Script not found." - what can I do?
+Probably the memory of your device is almost full. You can solve the problem by searching for the setting CACHING_ACTIVE in the script and changing the value from true to false.
+
 ### no-background doesn't work
 1. Make sure no-background.js is installed properly: Just copy [this](https://raw.githubusercontent.com/supermamon/scriptable-no-background/master/no-background.js) as a seperate script "no-background".
 
