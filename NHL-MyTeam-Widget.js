@@ -9,7 +9,7 @@
  *              the next games for your NHL team
  * author     : @thisisevanfox
  * support    : https://git.io/JtkA1
- * date       : 2021-02-01
+ * date       : 2021-02-07
  *******************************************************/
 
 /********************************************************
