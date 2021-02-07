@@ -37,7 +37,7 @@ const SHOW_STATS_AND_STANDINGS = true;
 // Indicator if the home team should show first (like it's common in Europe)
 // Default: true (home team shows first, e.g. "home - away")
 // false (away team shows first, e.g. "away @ home")
-const SHOW_HOME_TEAM_FIRST = false;
+const SHOW_HOME_TEAM_FIRST = true;
 
 // Indicator if the descriptions of the stats should be shown
 // Default: true (W: x - L: x - OTL: x)
