@@ -2,7 +2,7 @@
 ## v3.2.0
 ### New features:
 - Added new setting CACHING_ACTIVE. For a few users of the widget, sometimes the message "Script not found" appeared. This was due to the caching of the logos and insufficient memory on the users' devices. If you get this error, set the new setting CACHING_ACTIVE from true to false.
-- Added new setting SHOW_STATS_DESCRIPTION. A user on reddit pointed out to me that people who know field hockey know that the statistic 9-5-4 means that the team has 9 wins, 5 losses and 4 losses after overtime. So the descriptions "W-L-OTL" are superfluous. If you think so too, you can now set the SHOW_STATS_DESCRIPTION setting from true to false, then the "W-L-OTL" descriptions will disappear and you will only see the numbers.
+- Added new setting SHOW_STATS_DESCRIPTION. A user on reddit pointed out to me that people who know hockey know that the statistic 9-5-4 means that the team has 9 wins, 5 losses and 4 losses after overtime. So the descriptions "W-L-OTL" are superfluous. If you think so too, you can now set the SHOW_STATS_DESCRIPTION setting from true to false, then the "W-L-OTL" descriptions will disappear and you will only see the numbers.
 
 ## v3.1.0
 ### New features:
