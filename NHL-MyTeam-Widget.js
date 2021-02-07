@@ -4,7 +4,7 @@
 
 /********************************************************
  * script     : NHL-MyTeam-Widget.js
- * version    : 3.1.0
+ * version    : 3.2.0
  * description: Widget for Scriptable.app, which shows
  *              the next games for your NHL team
  * author     : @thisisevanfox
@@ -37,7 +37,12 @@ const SHOW_STATS_AND_STANDINGS = true;
 // Indicator if the home team should show first (like it's common in Europe)
 // Default: true (home team shows first, e.g. "home - away")
 // false (away team shows first, e.g. "away @ home")
-const SHOW_HOME_TEAM_FIRST = true;
+const SHOW_HOME_TEAM_FIRST = false;
+
+// Indicator if the descriptions of the stats should be shown
+// Default: true (W: x - L: x - OTL: x)
+// false (x - x - x)
+const SHOW_STATS_DESCRIPTION = true;
 
 // URL to shares app
 // Default: "nhl://" (Official NHL app)
@@ -50,6 +55,10 @@ const WIDGET_URL = "nhl://";
 // true = Widget will be in dark mode.
 // false = Widget will be in light mode.
 const DARK_MODE = Device.isUsingDarkAppearance();
+
+// Indicator if caching of logos is actived (saves datavolume)
+// Default: true
+const CACHING_ACTIVE = true;
 
 // Indicator if no-background.js is installed
 // Default: false
@@ -209,14 +218,25 @@ async function addSmallWidgetData(oWidget) {
     if (SHOW_STATS_AND_STANDINGS) {
       oWidget.addSpacer(4);
 
-      const oOpponentTeamStatsText = oWidget.addText(
-        "W: " +
+      let sOpponentStatsText;
+      if (SHOW_STATS_DESCRIPTION) {
+        sOpponentStatsText =
+          "W: " +
           oOpponentTeam.record.wins +
           " - L: " +
           oOpponentTeam.record.losses +
           " - OTL: " +
-          oOpponentTeam.record.ot
-      );
+          oOpponentTeam.record.ot;
+      } else {
+        sOpponentStatsText =
+          oOpponentTeam.record.wins +
+          " - " +
+          oOpponentTeam.record.losses +
+          " - " +
+          oOpponentTeam.record.ot;
+      }
+
+      const oOpponentTeamStatsText = oWidget.addText(sOpponentStatsText);
       oOpponentTeamStatsText.font = Font.systemFont(11);
       oOpponentTeamStatsText.textColor = getColorForCurrentAppearance();
 
@@ -253,14 +273,25 @@ async function addSmallWidgetData(oWidget) {
       const oBottomTextStack = oBottomStack.addStack();
       oBottomTextStack.layoutVertically();
 
-      const oMyTeamStatsText = oBottomTextStack.addText(
-        "W: " +
+      let sMyTeamStatsText;
+      if (SHOW_STATS_DESCRIPTION) {
+        sMyTeamStatsText =
+          "W: " +
           oMyTeam.record.wins +
           " - L: " +
           oMyTeam.record.losses +
           " - OTL: " +
-          oMyTeam.record.ot
-      );
+          oMyTeam.record.ot;
+      } else {
+        sMyTeamStatsText =
+          oMyTeam.record.wins +
+          " - " +
+          oMyTeam.record.losses +
+          " - " +
+          oMyTeam.record.ot;
+      }
+
+      const oMyTeamStatsText = oBottomTextStack.addText(sMyTeamStatsText);
       oMyTeamStatsText.font = Font.systemFont(9);
       oMyTeamStatsText.textColor = getColorForCurrentAppearance();
 
@@ -467,14 +498,25 @@ async function addHomeTeamStack(oNextGameStack, oGameData) {
   }
 
   if (SHOW_STATS_AND_STANDINGS) {
-    const oHomeTeamStatsText = oHomeTeamStack.addText(
-      "W: " +
+    let sHomeTeamStatsText;
+    if (SHOW_STATS_DESCRIPTION) {
+      sHomeTeamStatsText =
+        "W: " +
         oGameData.homeTeam.record.wins +
         " - L: " +
         oGameData.homeTeam.record.losses +
         " - OTL: " +
-        oGameData.homeTeam.record.ot
-    );
+        oGameData.homeTeam.record.ot;
+    } else {
+      sHomeTeamStatsText =
+        oGameData.homeTeam.record.wins +
+        " - " +
+        oGameData.homeTeam.record.losses +
+        " - " +
+        oGameData.homeTeam.record.ot;
+    }
+
+    const oHomeTeamStatsText = oHomeTeamStack.addText(sHomeTeamStatsText);
     oHomeTeamStatsText.font = Font.systemFont(11);
     oHomeTeamStatsText.textColor = getColorForCurrentAppearance();
 
@@ -536,14 +578,25 @@ async function addAwayTeamStack(oNextGameStack, oGameData) {
   }
 
   if (SHOW_STATS_AND_STANDINGS) {
-    const oAwayTeamStatsText = oAwayTeamStack.addText(
-      "W: " +
+    let sAwayTeamStatsText;
+    if (SHOW_STATS_DESCRIPTION) {
+      sAwayTeamStatsText =
+        "W: " +
         oGameData.awayTeam.record.wins +
         " - L: " +
         oGameData.awayTeam.record.losses +
         " - OTL: " +
-        oGameData.awayTeam.record.ot
-    );
+        oGameData.awayTeam.record.ot;
+    } else {
+      sAwayTeamStatsText =
+        oGameData.awayTeam.record.wins +
+        " - " +
+        oGameData.awayTeam.record.losses +
+        " - " +
+        oGameData.awayTeam.record.ot;
+    }
+
+    const oAwayTeamStatsText = oAwayTeamStack.addText(sAwayTeamStatsText);
     oAwayTeamStatsText.font = Font.systemFont(11);
     oAwayTeamStatsText.textColor = getColorForCurrentAppearance();
 
@@ -871,37 +924,42 @@ async function fetchCurrentStandings() {
  * @return {Object}
  */
 async function loadLogo(sImageUrl, sTeamAbbreviation) {
-  // Set up the file manager.
-  const oFiles = FileManager.local();
-
-  // Set up cache
-  const sCachePath = oFiles.joinPath(
-    oFiles.cacheDirectory(),
-    sTeamAbbreviation + "_NHL"
-  );
-  const bCacheExists = oFiles.fileExists(sCachePath);
-
   let oResult;
-  try {
-    if (bCacheExists) {
-      oResult = oFiles.readImage(sCachePath);
-    } else {
-      const oRequest = new Request(sImageUrl);
-      oResult = await oRequest.loadImage();
-      try {
-        oFiles.writeImage(sCachePath, oResult);
-        console.log("Created cache entry for logo of " + sTeamAbbreviation);
-      } catch (e) {
-        console.log(e);
+  if (CACHING_ACTIVE) {
+    // Set up the file manager.
+    const oFiles = FileManager.local();
+
+    // Set up cache
+    const sCachePath = oFiles.joinPath(
+      oFiles.cacheDirectory(),
+      sTeamAbbreviation + "_NHL"
+    );
+    const bCacheExists = oFiles.fileExists(sCachePath);
+
+    try {
+      if (bCacheExists) {
+        oResult = oFiles.readImage(sCachePath);
+      } else {
+        const oRequest = new Request(sImageUrl);
+        oResult = await oRequest.loadImage();
+        try {
+          oFiles.writeImage(sCachePath, oResult);
+          console.log("Created cache entry for logo of " + sTeamAbbreviation);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    } catch (oError) {
+      console.error(oError);
+      if (bCacheExists) {
+        oResult = oFiles.readImage(sCachePath);
+      } else {
+        console.log("Fetching logo for " + sTeamAbbreviation + " failed.");
       }
     }
-  } catch (oError) {
-    console.error(oError);
-    if (bCacheExists) {
-      oResult = oFiles.readImage(sCachePath);
-    } else {
-      console.log("Fetching logo for " + sTeamAbbreviation + " failed.");
-    }
+  } else {
+    const oRequest = new Request(sImageUrl);
+    oResult = await oRequest.loadImage();
   }
 
   return oResult;
