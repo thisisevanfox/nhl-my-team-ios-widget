@@ -1,4 +1,12 @@
 # Changelog
+## v4
+### New features:
+- Added new team "Seattle Kraken"
+- Reorderd teams according to new divisions
+
+### Bugfixes:
+- Fixed display of date for the next game
+
 ## v3.2.0
 ### New features:
 - Added new setting CACHING_ACTIVE. For a few users of the widget, sometimes the message "Script not found" appeared. This was due to the caching of the logos and insufficient memory on the users' devices. If you get this error, set the new setting CACHING_ACTIVE from true to false.

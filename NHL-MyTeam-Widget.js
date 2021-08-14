@@ -4,12 +4,12 @@
 
 /********************************************************
  * script     : NHL-MyTeam-Widget.js
- * version    : 3.2.0
+ * version    : 4.0.0
  * description: Widget for Scriptable.app, which shows
  *              the next games for your NHL team
  * author     : @thisisevanfox
  * support    : https://git.io/JtkA1
- * date       : 2021-02-07
+ * date       : 2021-08-14
  *******************************************************/
 
 /********************************************************
@@ -18,10 +18,10 @@
  *******************************************************/
 
 // Type the abbreviation of your NHL team here.
-// North Division: CGY, EDM, MTL, OTT, TOR, VAN, WPG
-// East Division: BOS, BUF, NJD, NYI, NYR, PHI, PIT, WSH
-// Central Division: CAR, CHI, CBJ, DAL, DET, FLA, NSH, TBL
-// West Division: ANA, ARI, COL, LAK, MIN, STL, SJS, VGK
+// Atlantic Division: BOS, BUF, DET, FLA, MTL, OTT, TBL, TOR
+// Metropolitan Division: CAR, CBJ, NJD, NYI, NYR, PHI, PIT, WSH
+// Central Division: ARI, CHI, COL, DAL, MIN, NSH, STL, WPG
+// Pacific Division: ANA, CGY, EDM, LAK, SJS, SEA, VAN, VGK
 const MY_NHL_TEAM = "ENTER_TEAM_ABBREVIATION_HERE";
 
 // Indicator if livescores should be shown.
@@ -362,6 +362,7 @@ async function addMediumWidgetData(oWidget) {
       oGameData.currentPeriodOrdinal != undefined &&
       oGameData.currentPeriodOrdinal != null &&
       oGameData.currentPeriodOrdinal != "" &&
+	  (oGameData.currentPeriodOrdinal === "1st" && oGameData.timeRemaining != "20:00") &&
       SHOW_LIVE_SCORES
     ) {
       oHeadingText = oHeadingStack.addText(
@@ -923,7 +924,7 @@ async function fetchCurrentStandings() {
  * @param {String} sTeamAbbreviation
  * @return {Object}
  */
-async function loadLogo(sImageUrl, sTeamAbbreviation) {
+async function loadLogo(sImageUrl, sTeamAbbreviation) {	
   let oResult;
   if (CACHING_ACTIVE) {
     // Set up the file manager.
@@ -935,7 +936,7 @@ async function loadLogo(sImageUrl, sTeamAbbreviation) {
       sTeamAbbreviation + "_NHL"
     );
     const bCacheExists = oFiles.fileExists(sCachePath);
-
+	
     try {
       if (bCacheExists) {
         oResult = oFiles.readImage(sCachePath);
@@ -1192,6 +1193,11 @@ function getTeamData() {
       id: "54",
       logo:
         "https://www.thesportsdb.com/images/media/team/badge/9w7peh1507632324.png/preview",
+    },
+    SEA: {
+      id: "55",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/zsx49m1595775836.png/preview",
     },
   };
 }
