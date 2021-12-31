@@ -937,8 +937,6 @@ async function loadLogo(sImageUrl, sTeamAbbreviation) {
     );
     const bCacheExists = oFiles.fileExists(sCachePath);
 	
- 
-
     try {
       if (bCacheExists) {
         oResult = oFiles.readImage(sCachePath);
