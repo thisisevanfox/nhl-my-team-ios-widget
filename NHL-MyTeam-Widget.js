@@ -4,12 +4,12 @@
 
 /********************************************************
  * script     : NHL-MyTeam-Widget.js
- * version    : 4.0.0
+ * version    : 4.0.1
  * description: Widget for Scriptable.app, which shows
  *              the next games for your NHL team
  * author     : @thisisevanfox
  * support    : https://git.io/JtkA1
- * date       : 2021-08-14
+ * date       : 2021-12-31
  *******************************************************/
 
 /********************************************************
@@ -851,7 +851,7 @@ async function fetchScheduleData(oTeamData) {
   const iMonth = dStartDate.getMonth() + 1;
   const iDay = dStartDate.getDate();
   const sFormattedDate = iYear + "-" + iMonth + "-" + iDay;
-  const sUrl = `https://statsapi.web.nhl.com/api/v1/schedule?startDate=${sFormattedDate}&endDate=2021-12-30&teamId=${sMyTeamId}&expand=schedule.teams,schedule.venue,schedule.metadata,schedule.ticket,schedule.broadcasts.all`;
+  const sUrl = `https://statsapi.web.nhl.com/api/v1/schedule?startDate=${sFormattedDate}&endDate=2099-12-31&teamId=${sMyTeamId}&expand=schedule.teams,schedule.venue,schedule.metadata,schedule.ticket,schedule.broadcasts.all`;
   const oRequest = new Request(sUrl);
   return await oRequest.loadJSON();
 }

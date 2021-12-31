@@ -1,4 +1,8 @@
 # Changelog
+## v4.0.1
+### Bugfixes:
+- Fixed URL to fetch schedule data for next year
+
 ## v4
 ### New features:
 - Added new team "Seattle Kraken"
