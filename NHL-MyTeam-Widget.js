@@ -1060,7 +1060,7 @@ function getTeamData() {
     OTT: {
       id: "9",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/qurpwu1421616521.png/preview",
+        "https://www.thesportsdb.com/images/media/team/badge/2tc1qy1619536592.png/preview",
     },
     // Toronto Maple Leafs
     TOR: {
