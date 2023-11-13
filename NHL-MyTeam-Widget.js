@@ -4,12 +4,12 @@
 
 /********************************************************
  * script     : NHL-MyTeam-Widget.js
- * version    : 4.0.1
+ * version    : 5.0.0
  * description: Widget for Scriptable.app, which shows
  *              the next games for your NHL team
  * author     : @thisisevanfox
  * support    : https://git.io/JtkA1
- * date       : 2021-12-31
+ * date       : 2023-11-13
  *******************************************************/
 
 /********************************************************
@@ -23,6 +23,11 @@
 // Central Division: ARI, CHI, COL, DAL, MIN, NSH, STL, WPG
 // Pacific Division: ANA, CGY, EDM, LAK, SJS, SEA, VAN, VGK
 const MY_NHL_TEAM = "ENTER_TEAM_ABBREVIATION_HERE";
+
+// Start year of current season
+// For season 2023-24, the value must be "20232024"
+// For season 2024-25, the value must be "20242025"
+const CURRENT_SEASON = "20232024";
 
 // Indicator if livescores should be shown.
 // If you don't want to be spoilered set it to false.
@@ -164,7 +169,7 @@ async function addSmallWidgetData(oWidget) {
   if (oGameData != null) {
     let oMyTeam;
     let oOpponentTeam;
-    if (oGameData.homeTeam.abbreviation == MY_NHL_TEAM) {
+    if (oGameData.homeTeam.abbrev == MY_NHL_TEAM) {
       oMyTeam = oGameData.homeTeam;
       oOpponentTeam = oGameData.awayTeam;
     } else {
@@ -210,7 +215,7 @@ async function addSmallWidgetData(oWidget) {
 
     const oOpponentLogoImage = await loadLogo(
       oOpponentTeam.logoLink,
-      oOpponentTeam.abbreviation
+      oOpponentTeam.abbrev
     );
     const oOpponentLogo = oUpperStack.addImage(oOpponentLogoImage);
     oOpponentLogo.imageSize = new Size(40, 40);
@@ -242,11 +247,11 @@ async function addSmallWidgetData(oWidget) {
 
       const oOpponentTeamStandingsText = oWidget.addText(
         "Div.: " +
-          oOpponentTeam.record.divisionRank +
-          "." +
-          " | Lea.: " +
-          oOpponentTeam.record.leagueRank +
-          "."
+        oOpponentTeam.record.divisionRank +
+        "." +
+        " | Lea.: " +
+        oOpponentTeam.record.leagueRank +
+        "."
       );
       oOpponentTeamStandingsText.font = Font.systemFont(11);
       oOpponentTeamStandingsText.textColor = getColorForCurrentAppearance();
@@ -297,11 +302,11 @@ async function addSmallWidgetData(oWidget) {
 
       const oMyTeamStandingsText = oBottomTextStack.addText(
         "Div.: " +
-          oMyTeam.record.divisionRank +
-          "." +
-          " | Lea.: " +
-          oMyTeam.record.leagueRank +
-          "."
+        oMyTeam.record.divisionRank +
+        "." +
+        " | Lea.: " +
+        oMyTeam.record.leagueRank +
+        "."
       );
       oMyTeamStandingsText.font = Font.systemFont(9);
       oMyTeamStandingsText.textColor = getColorForCurrentAppearance();
@@ -318,7 +323,7 @@ async function addSmallWidgetData(oWidget) {
 
       const oMyTeamLogoImage = await loadLogo(
         oMyTeam.logoLink,
-        oMyTeam.abbreviation
+        oMyTeam.abbrev
       );
       const oMyTeamLogo = oBottomStack.addImage(oMyTeamLogoImage);
       oMyTeamLogo.imageSize = new Size(25, 25);
@@ -359,14 +364,13 @@ async function addMediumWidgetData(oWidget) {
 
     let oHeadingText;
     if (
-      oGameData.currentPeriodOrdinal != undefined &&
-      oGameData.currentPeriodOrdinal != null &&
-      oGameData.currentPeriodOrdinal != "" &&
-	  (oGameData.currentPeriodOrdinal === "1st" && oGameData.timeRemaining != "20:00") &&
+      oGameData.currentPeriod != undefined &&
+      oGameData.currentPeriod != null &&
+      oGameData.currentPeriod != "" &&
       SHOW_LIVE_SCORES
     ) {
       oHeadingText = oHeadingStack.addText(
-        `${oGameData.currentPeriodOrdinal} - ${oGameData.timeRemaining}`
+        `${oGameData.currentPeriod} - ${oGameData.timeRemaining}`
       );
     } else {
       const dGameDate = new Date(oGameData.gameDate);
@@ -424,7 +428,7 @@ async function addMediumWidgetData(oWidget) {
 
       const oFutureGameLogoImage = await loadLogo(
         oNextGame.opponent.logoLink,
-        oNextGame.opponent.abbreviation
+        oNextGame.opponent.abbrev
       );
       const oNextGameLogo = oFutureGame.addImage(oFutureGameLogoImage);
       oNextGameLogo.imageSize = new Size(15, 15);
@@ -484,7 +488,7 @@ async function addHomeTeamStack(oNextGameStack, oGameData) {
 
   const oHomeLogoImage = await loadLogo(
     oGameData.homeTeam.logoLink,
-    oGameData.homeTeam.abbreviation
+    oGameData.homeTeam.abbrev
   );
   const oHomeLogo = oHomeTeamLogoStack.addImage(oHomeLogoImage);
   oHomeLogo.imageSize = new Size(40, 40);
@@ -523,11 +527,11 @@ async function addHomeTeamStack(oNextGameStack, oGameData) {
 
     const oHomeTeamStandingsText = oHomeTeamStack.addText(
       "Division: " +
-        oGameData.homeTeam.record.divisionRank +
-        "." +
-        " | League: " +
-        oGameData.homeTeam.record.leagueRank +
-        "."
+      oGameData.homeTeam.record.divisionRank +
+      "." +
+      " | League: " +
+      oGameData.homeTeam.record.leagueRank +
+      "."
     );
     oHomeTeamStandingsText.font = Font.systemFont(9);
     oHomeTeamStandingsText.textColor = getColorForCurrentAppearance();
@@ -563,7 +567,7 @@ async function addAwayTeamStack(oNextGameStack, oGameData) {
 
   const oAwayLogoImage = await loadLogo(
     oGameData.awayTeam.logoLink,
-    oGameData.awayTeam.abbreviation
+    oGameData.awayTeam.abbrev
   );
   const oAwayLogo = oAwayTeamLogoStack.addImage(oAwayLogoImage);
   oAwayLogo.imageSize = new Size(40, 40);
@@ -603,11 +607,11 @@ async function addAwayTeamStack(oNextGameStack, oGameData) {
 
     const oAwayTeamStandingsText = oAwayTeamStack.addText(
       "Division: " +
-        oGameData.awayTeam.record.divisionRank +
-        "." +
-        " | League: " +
-        oGameData.awayTeam.record.leagueRank +
-        "."
+      oGameData.awayTeam.record.divisionRank +
+      "." +
+      " | League: " +
+      oGameData.awayTeam.record.leagueRank +
+      "."
     );
     oAwayTeamStandingsText.font = Font.systemFont(9);
     oAwayTeamStandingsText.textColor = getColorForCurrentAppearance();
@@ -632,11 +636,10 @@ async function prepareData() {
     gameDate: "",
     venue: "",
     currentPeriod: 0,
-    currentPeriodOrdinal: "",
     timeRemaining: "",
     nextGames: [],
     homeTeam: {
-      abbreviation: "",
+      abbrev: "",
       logoLink: "",
       record: {},
       goals: "",
@@ -646,7 +649,7 @@ async function prepareData() {
       },
     },
     awayTeam: {
-      abbreviation: "",
+      abbrev: "",
       logoLink: "",
       record: {},
       goals: "",
@@ -658,90 +661,57 @@ async function prepareData() {
   };
 
   const oTeamData = getTeamData();
-  const oScheduleData = await fetchScheduleData(oTeamData);
+  const aScheduleData = await fetchScheduleData();
   const oStandings = await fetchCurrentStandings();
 
   if (
-    oScheduleData &&
-    oScheduleData.dates.length > 0 &&
-    oScheduleData.dates[0].games.length > 0
+    aScheduleData &&
+    aScheduleData.length > 0
   ) {
-    const oNextGame = oScheduleData.dates[0].games[0];
+    const oNextGame = aScheduleData[0];
 
     if (oNextGame != undefined) {
-      const oHomeTeam = oNextGame.teams.home;
-      const oAwayTeam = oNextGame.teams.away;
+      const oHomeTeam = oNextGame.homeTeam;
+      const oAwayTeam = oNextGame.awayTeam;
 
-      const oHomeTeamTopScorer = await fetchTopScorer(oHomeTeam.team.id);
-      const oAwayTeamTopScorer = await fetchTopScorer(oAwayTeam.team.id);
+      const oHomeTeamTopScorer = await fetchTopScorerByAbbreviation(oHomeTeam.abbrev);
+      const oAwayTeamTopScorer = await fetchTopScorerByAbbreviation(oAwayTeam.abbrev);
 
-      const oHomeTeamStandings = filterStandingsById(
-        oHomeTeam.team.id,
+      const oHomeTeamStandings = filterStandingsByAbbreviation(
+        oHomeTeam.abbrev,
         oStandings
       );
-      const oAwayTeamStandings = filterStandingsById(
-        oAwayTeam.team.id,
+      const oAwayTeamStandings = filterStandingsByAbbreviation(
+        oAwayTeam.abbrev,
         oStandings
       );
 
-      oData.gameDate = oNextGame.gameDate;
-      if (oNextGame.venue) {
-        oData.venue = oNextGame.venue.city
-          ? oNextGame.venue.city
-          : oNextGame.venue.location.city;
-      }
-      oData.nextGames = getNextGames(oScheduleData.dates, oTeamData);
-      oData.homeTeam.abbreviation = oHomeTeam.team.abbreviation;
-      oData.homeTeam.logoLink = oTeamData[oData.homeTeam.abbreviation].logo;
+      oData.gameDate = oNextGame.startTimeUTC;
+      oData.venue = oNextGame.venue.default;
+      oData.nextGames = getNextGames(aScheduleData.splice(1, aScheduleData.length), oTeamData);
+      oData.homeTeam.abbrev = oHomeTeam.abbrev;
+      oData.homeTeam.logoLink = oTeamData[oHomeTeam.abbrev].logo;
       oData.homeTeam.record = oHomeTeamStandings;
-      oData.awayTeam.abbreviation = oAwayTeam.team.abbreviation;
-      oData.awayTeam.logoLink = oTeamData[oData.awayTeam.abbreviation].logo;
+      oData.awayTeam.abbrev = oAwayTeam.abbrev;
+      oData.awayTeam.logoLink = oTeamData[oAwayTeam.abbrev].logo;
       oData.awayTeam.record = oAwayTeamStandings;
 
       if (oHomeTeamTopScorer != null) {
-        oData.homeTeam.topscorer.name = oHomeTeamTopScorer.person.fullName;
-        oData.homeTeam.topscorer.points = oHomeTeamTopScorer.value;
+        oData.homeTeam.topscorer.name = `${oHomeTeamTopScorer.firstName.default} ${oHomeTeamTopScorer.lastName.default}`;
+        oData.homeTeam.topscorer.points = oHomeTeamTopScorer.points;
       }
       if (oAwayTeamTopScorer != null) {
-        oData.awayTeam.topscorer.name = oAwayTeamTopScorer.person.fullName;
-        oData.awayTeam.topscorer.points = oAwayTeamTopScorer.value;
+        oData.awayTeam.topscorer.name = `${oAwayTeamTopScorer.firstName.default} ${oAwayTeamTopScorer.lastName.default}`;
+        oData.awayTeam.topscorer.points = oAwayTeamTopScorer.points;
       }
 
       if (SHOW_LIVE_SCORES) {
-        const oLiveData = await fetchLiveData(oNextGame.gamePk);
+        const oLiveData = await fetchLiveData(oNextGame.id);
         if (oLiveData) {
-          const oLineScore = oLiveData["linescore"];
-          const bIsShootout = oLineScore.hasShootout;
-          if (oLineScore) {
-            oData.currentPeriod = oLineScore.currentPeriod;
-            oData.currentPeriodOrdinal = oLineScore.currentPeriodOrdinal;
-            oData.timeRemaining = oLineScore.currentPeriodTimeRemaining;
-          }
-
-          const oBoxScoreTeams = oLiveData.boxscore.teams;
-          if (
-            oBoxScoreTeams.home.teamStats.teamSkaterStats !== undefined &&
-            oBoxScoreTeams.home.teamStats.teamSkaterStats.goals !== undefined
-          ) {
-            oData.homeTeam.goals =
-              oBoxScoreTeams.home.teamStats.teamSkaterStats.goals;
-            if (bIsShootout) {
-              oData.homeTeam.goals =
-                oLineScore.shootoutInfo.home.scores + oData.homeTeam.goals;
-            }
-          }
-
-          if (
-            oBoxScoreTeams.away.teamStats.teamSkaterStats !== undefined &&
-            oBoxScoreTeams.away.teamStats.teamSkaterStats.goals !== undefined
-          ) {
-            oData.awayTeam.goals =
-              oBoxScoreTeams.away.teamStats.teamSkaterStats.goals;
-            if (bIsShootout) {
-              oData.awayTeam.goals =
-                oLineScore.shootoutInfo.away.scores + oData.awayTeam.goals;
-            }
-          }
+          oData.currentPeriod = oLiveData.period;
+          oData.timeRemaining = oLiveData.clock.timeRemaining;
+          oData.homeTeam.goals = oLiveData.homeTeam.score;
+          oData.awayTeam.goals = oLiveData.awayTeam.score;
         }
       }
     }
@@ -760,7 +730,6 @@ async function prepareData() {
  * @return {Object[]}
  */
 function getNextGames(aGames, oTeamData) {
-  const sMyTeamId = oTeamData[MY_NHL_TEAM].id;
   const aNextGames = [];
   const iLength = aGames.length < 5 ? aGames.length : 5;
 
@@ -768,20 +737,20 @@ function getNextGames(aGames, oTeamData) {
     let oData = {
       gameDate: "",
       opponent: {
-        abbreviation: "",
+        abbrev: "",
         logoLink: "",
       },
     };
 
-    const oGame = aGames[i].games[0];
+    const oGame = aGames[i];
     oData.gameDate = oGame.gameDate;
-    if (oGame.teams.away.team.id == sMyTeamId) {
-      oData.opponent.abbreviation = oGame.teams.home.team.abbreviation;
+    if (oGame.awayTeam.abbrev == MY_NHL_TEAM) {
+      oData.opponent.abbrev = oGame.homeTeam.abbrev;
     } else {
       // Yeey, it's a homegame for my team :-)
-      oData.opponent.abbreviation = oGame.teams.away.team.abbreviation;
+      oData.opponent.abbrev = oGame.awayTeam.abbrev;
     }
-    oData.opponent.logoLink = oTeamData[oData.opponent.abbreviation].logo;
+    oData.opponent.logoLink = oTeamData[oData.opponent.abbrev].logo;
 
     aNextGames.push(oData);
   }
@@ -796,31 +765,20 @@ function getNextGames(aGames, oTeamData) {
  * @param {Object} oStandings
  * @return {Object}
  */
-function filterStandingsById(sTeamId, oStandings) {
+function filterStandingsByAbbreviation(sAbbreviation, oStandings) {
   let oResult = null;
-  if (oStandings) {
-    oStandings.records.forEach((record) => {
-      record.teamRecords.forEach((teamRecord) => {
-        if (teamRecord.team.id == sTeamId) {
-          oResult = {
-            wins: teamRecord.leagueRecord.wins,
-            losses: teamRecord.leagueRecord.losses,
-            ot: teamRecord.leagueRecord.ot,
-            divisionRank: teamRecord.divisionRank,
-            leagueRank: teamRecord.leagueRank,
-          };
-        }
-        if (oResult != null) {
-          return oResult;
-        }
-      });
-
-      if (oResult != null) {
-        return oResult;
-      }
-    });
+  if (oStandings && oStandings?.standings) {
+    const oTeamStanding = oStandings.standings.find(standing => standing.teamAbbrev.default === sAbbreviation);
+    if (!!oTeamStanding) {
+      oResult = {
+        wins: oTeamStanding.wins,
+        losses: oTeamStanding.losses,
+        ot: oTeamStanding.otLosses,
+        divisionRank: oTeamStanding.divisionSequence,
+        leagueRank: oTeamStanding.leagueSequence,
+      };
+    }
   }
-
   if (oResult === null) {
     oResult = {
       wins: 0,
@@ -837,46 +795,52 @@ function filterStandingsById(sTeamId, oStandings) {
 /**
  * Fetches schedule data from NHL api.
  *
- * @param {Object} oTeamData
  * @return {Object}
  */
-async function fetchScheduleData(oTeamData) {
-  const sMyTeamId = oTeamData[MY_NHL_TEAM].id;
-  const dStartDate = new Date();
-
-  // Games in Europe are after midnight, so subtract 6 hours
-  dStartDate.setHours(dStartDate.getHours() - 6);
-
-  const iYear = dStartDate.getFullYear();
-  const iMonth = dStartDate.getMonth() + 1;
-  const iDay = dStartDate.getDate();
-  const sFormattedDate = iYear + "-" + iMonth + "-" + iDay;
-  const sUrl = `https://statsapi.web.nhl.com/api/v1/schedule?startDate=${sFormattedDate}&endDate=2099-12-31&teamId=${sMyTeamId}&expand=schedule.teams,schedule.venue,schedule.metadata,schedule.ticket,schedule.broadcasts.all`;
+async function fetchScheduleData() {
+  const sUrl = `https://api-web.nhle.com/v1/club-schedule-season/${MY_NHL_TEAM}/${CURRENT_SEASON}`;
   const oRequest = new Request(sUrl);
-  return await oRequest.loadJSON();
+  const oData = await oRequest.loadJSON();
+
+  const aGames = [];
+
+  for (let j = 0; j < 31; j++) {
+    const dStartDate = new Date()
+    const day = (dStartDate).getDate();
+    // Workaround if next games are wrong or missing: subtract x hours
+    // dStartDate.setHours(dStartDate.getHours() - 6);
+    dStartDate.setDate(day + j);
+    const iYear = dStartDate.getFullYear();
+    const iMonth = dStartDate.getMonth() + 1;
+    const iDay = dStartDate.getDate();
+    const oGame = oData.games.find(game => game.gameDate === `${iYear}-${iMonth}-${iDay}`);
+
+    if (!!oGame) {
+      aGames.push(oGame);
+    }
+
+    if (aGames.length === 6) {
+      break;
+    }
+  }
+
+  return aGames;
 }
 
 /**
  * Fetches top scorer data from NHL api.
  *
- * @param {string} sTeamId
+ * @param {string} sAbbreviation
  * @return {Object}
  */
-async function fetchTopScorer(sTeamId) {
-  const sUrl = `https://statsapi.web.nhl.com/api/v1/teams/${sTeamId}?expand=team.leaders,leaders.person&leaderGameTypes=R&leaderCategories=points`;
+async function fetchTopScorerByAbbreviation(sAbbreviation) {
+  const sUrl = `https://api-web.nhle.com/v1/club-stats/${sAbbreviation}/now`;
   const oRequest = new Request(sUrl);
-  const oTopScorer = await oRequest.loadJSON();
+  const oData = await oRequest.loadJSON();
 
   let oResult = null;
-  if (oTopScorer !== undefined) {
-    if (oTopScorer.teams[0] !== undefined) {
-      if (oTopScorer.teams[0].teamLeaders !== undefined) {
-        oResult = oTopScorer.teams[0].teamLeaders[0].leaders[0];
-        if (!oResult) {
-          oResult = null;
-        }
-      }
-    }
+  if (!!oData) {
+    oResult = oData.skaters.sort((a, b) => a.points - b.points).reverse()[0];
   }
 
   return oResult;
@@ -889,21 +853,11 @@ async function fetchTopScorer(sTeamId) {
  * @return {Object}
  */
 async function fetchLiveData(sGameId) {
-  const sUrl = `https://statsapi.web.nhl.com/api/v1/game/${sGameId}/feed/live`;
+  const sUrl = `https://api-web.nhle.com/v1/gamecenter/${sGameId}/boxscore`;
   const oRequest = new Request(sUrl);
   const oLiveData = await oRequest.loadJSON();
 
-  let oResult = null;
-  if (oLiveData !== undefined) {
-    if (oLiveData.liveData !== undefined) {
-      oResult = oLiveData.liveData;
-      if (!oResult) {
-        oResult = null;
-      }
-    }
-  }
-
-  return oResult;
+  return !!oLiveData ? null : oLiveData;
 }
 
 /**
@@ -912,7 +866,7 @@ async function fetchLiveData(sGameId) {
  * @return {Object}
  */
 async function fetchCurrentStandings() {
-  const sUrl = `https://statsapi.web.nhl.com/api/v1/standings`;
+  const sUrl = `https://api-web.nhle.com/v1/standings/now`;
   const oRequest = new Request(sUrl);
   return await oRequest.loadJSON();
 }
@@ -924,7 +878,7 @@ async function fetchCurrentStandings() {
  * @param {String} sTeamAbbreviation
  * @return {Object}
  */
-async function loadLogo(sImageUrl, sTeamAbbreviation) {	
+async function loadLogo(sImageUrl, sTeamAbbreviation) {
   let oResult;
   if (CACHING_ACTIVE) {
     // Set up the file manager.
@@ -936,7 +890,7 @@ async function loadLogo(sImageUrl, sTeamAbbreviation) {
       sTeamAbbreviation + "_NHL"
     );
     const bCacheExists = oFiles.fileExists(sCachePath);
-	
+
     try {
       if (bCacheExists) {
         oResult = oFiles.readImage(sCachePath);
@@ -1048,7 +1002,7 @@ function getTeamData() {
     // Buffalo Sabres
     BUF: {
       id: "7",
-      logo: "https://i.imgur.com/RC2srC9.png",
+      logo: "https://www.thesportsdb.com/images/media/team/badge/vuspuq1421791546.png/preview",
     },
     // Montréal Canadiens
     MTL: {
@@ -1090,7 +1044,7 @@ function getTeamData() {
     WSH: {
       id: "15",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/u17iel1547157581.png/preview",
+        "https://www.thesportsdb.com/images/media/team/badge/99ca9a1638974052.png/preview",
     },
     // Chicago Blackhawks
     CHI: {
@@ -1186,7 +1140,7 @@ function getTeamData() {
     ARI: {
       id: "53",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/wpxpsx1421868857.png/preview",
+        "https://www.thesportsdb.com/images/media/team/badge/3n1yqw1635072720.png/preview",
     },
     // Vegas Golden Knights
     VGK: {
@@ -1194,6 +1148,7 @@ function getTeamData() {
       logo:
         "https://www.thesportsdb.com/images/media/team/badge/9w7peh1507632324.png/preview",
     },
+    // Seattle Kraken
     SEA: {
       id: "55",
       logo:

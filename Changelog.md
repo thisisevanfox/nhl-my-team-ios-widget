@@ -1,4 +1,9 @@
 # Changelog
+## v5.0.0
+### Bugfixes:
+- Fixed API URLs 
+- Changed logos of Arizona, Buffalo and Washington
+
 ## v4.0.1
 ### Bugfixes:
 - Fixed URL to fetch schedule data for next year
