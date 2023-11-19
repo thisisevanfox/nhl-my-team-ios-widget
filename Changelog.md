@@ -1,4 +1,11 @@
 # Changelog
+## v5.0.1
+### New features:
+- If the match takes place on the current day, the widget no longer displays the date but "Today".
+
+### Bugfixes:
+- Fixed livescores
+
 ## v5.0.0
 ### Bugfixes:
 - Fixed API URLs 
