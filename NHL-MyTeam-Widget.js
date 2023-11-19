@@ -4,12 +4,12 @@
 
 /********************************************************
  * script     : NHL-MyTeam-Widget.js
- * version    : 5.0.0
+ * version    : 5.0.1
  * description: Widget for Scriptable.app, which shows
  *              the next games for your NHL team
  * author     : @thisisevanfox
  * support    : https://git.io/JtkA1
- * date       : 2023-11-13
+ * date       : 2023-11-19
  *******************************************************/
 
 /********************************************************
@@ -370,19 +370,25 @@ async function addMediumWidgetData(oWidget) {
       SHOW_LIVE_SCORES
     ) {
       oHeadingText = oHeadingStack.addText(
-        `${oGameData.currentPeriod} - ${oGameData.timeRemaining}`
+        `Period: ${oGameData.currentPeriod} - ${oGameData.timeRemaining}`
       );
     } else {
       const dGameDate = new Date(oGameData.gameDate);
-      const dLocalDate = dGameDate.toLocaleString([], {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
+      const dNow = new Date();
+      const bGameIsToday = dNow.toDateString() === dGameDate.toDateString();
+      const sDatePart = bGameIsToday ? "Today" :
+        dGameDate.toLocaleString([], {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit"
+        });
+      const sTimePart = dGameDate.toLocaleString([], {
         hour: "2-digit",
         minute: "2-digit",
       });
+      const sGameDateText = `${sDatePart}, ${sTimePart}`;
       const sVenueText = oGameData.venue != "" ? ` @ ${oGameData.venue}` : ``;
-      oHeadingText = oHeadingStack.addText(`${dLocalDate}${sVenueText}`);
+      oHeadingText = oHeadingStack.addText(`${sGameDateText}${sVenueText}`);
     }
     oHeadingText.font = Font.boldSystemFont(11);
     oHeadingText.textColor = getColorForCurrentAppearance();
@@ -857,7 +863,7 @@ async function fetchLiveData(sGameId) {
   const oRequest = new Request(sUrl);
   const oLiveData = await oRequest.loadJSON();
 
-  return !!oLiveData ? null : oLiveData;
+  return !oLiveData ? null : oLiveData;
 }
 
 /**
@@ -1004,7 +1010,7 @@ function getTeamData() {
       id: "7",
       logo: "https://www.thesportsdb.com/images/media/team/badge/vuspuq1421791546.png/preview",
     },
-    // Montréal Canadiens
+    // Montreal Canadiens
     MTL: {
       id: "8",
       logo:
