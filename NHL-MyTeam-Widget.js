@@ -502,7 +502,7 @@ async function addHomeTeamStack(oNextGameStack, oGameData) {
   if (SHOW_LIVE_SCORES) {
     oHomeTeamLogoStack.addSpacer(45);
     const oHomeTeamGoalsText = oHomeTeamLogoStack.addText(
-      oGameData.currentPeriod === 0 ? `-` : `${oGameData.homeTeam.goals}`
+      !oGameData.currentPeriod ? `-` : `${oGameData.homeTeam.goals}`
     );
     oHomeTeamGoalsText.font = Font.boldSystemFont(35);
     oHomeTeamGoalsText.textColor = getColorForCurrentAppearance();
@@ -582,7 +582,7 @@ async function addAwayTeamStack(oNextGameStack, oGameData) {
     oAwayTeamLogoStack.addSpacer(45);
 
     const oAwayTeamGoalsText = oAwayTeamLogoStack.addText(
-      oGameData.currentPeriod === 0 ? `-` : `${oGameData.awayTeam.goals}`
+      !oGameData.currentPeriod ? `-` : `${oGameData.awayTeam.goals}`
     );
     oAwayTeamGoalsText.font = Font.boldSystemFont(35);
     oAwayTeamGoalsText.textColor = getColorForCurrentAppearance();
