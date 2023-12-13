@@ -4,12 +4,12 @@
 
 /********************************************************
  * script     : NHL-MyTeam-Widget.js
- * version    : 5.0.1
+ * version    : 5.0.2
  * description: Widget for Scriptable.app, which shows
  *              the next games for your NHL team
  * author     : @thisisevanfox
  * support    : https://git.io/JtkA1
- * date       : 2023-11-19
+ * date       : 2023-12-13
  *******************************************************/
 
 /********************************************************
@@ -694,7 +694,7 @@ async function prepareData() {
 
       oData.gameDate = oNextGame.startTimeUTC;
       oData.venue = oNextGame.venue.default;
-      oData.nextGames = getNextGames(aScheduleData.splice(1, aScheduleData.length), oTeamData);
+      oData.nextGames = getNextGames(aScheduleData.splice(0, aScheduleData.length), oTeamData);
       oData.homeTeam.abbrev = oHomeTeam.abbrev;
       oData.homeTeam.logoLink = oTeamData[oHomeTeam.abbrev].logo;
       oData.homeTeam.record = oHomeTeamStandings;
@@ -749,7 +749,7 @@ function getNextGames(aGames, oTeamData) {
     };
 
     const oGame = aGames[i];
-    oData.gameDate = oGame.gameDate;
+    oData.gameDate = new Date(oGame.startTimeUTC);
     if (oGame.awayTeam.abbrev == MY_NHL_TEAM) {
       oData.opponent.abbrev = oGame.homeTeam.abbrev;
     } else {
@@ -808,27 +808,20 @@ async function fetchScheduleData() {
   const oRequest = new Request(sUrl);
   const oData = await oRequest.loadJSON();
 
-  const aGames = [];
+  const todayDate = new Date();
+  todayDate.setUTCHours(0, 0, 0, 0);
 
-  for (let j = 0; j < 31; j++) {
-    const dStartDate = new Date()
-    const day = (dStartDate).getDate();
-    // Workaround if next games are wrong or missing: subtract x hours
-    // dStartDate.setHours(dStartDate.getHours() - 6);
-    dStartDate.setDate(day + j);
-    const iYear = dStartDate.getFullYear();
-    const iMonth = dStartDate.getMonth() + 1;
-    const iDay = dStartDate.getDate();
-    const oGame = oData.games.find(game => game.gameDate === `${iYear}-${iMonth}-${iDay}`);
-
-    if (!!oGame) {
-      aGames.push(oGame);
-    }
-
-    if (aGames.length === 6) {
-      break;
-    }
-  }
+  const aGames = oData.games?.filter(game => {
+    const gameDate = new Date(game.gameDate + 'T00:00:00Z');
+    return (
+      gameDate.getUTCFullYear() > todayDate.getUTCFullYear() ||
+      (gameDate.getUTCFullYear() === todayDate.getUTCFullYear() &&
+        gameDate.getUTCMonth() > todayDate.getUTCMonth()) ||
+      (gameDate.getUTCFullYear() === todayDate.getUTCFullYear() &&
+        gameDate.getUTCMonth() === todayDate.getUTCMonth() &&
+        gameDate.getUTCDate() >= todayDate.getUTCDate())
+    );
+  });
 
   return aGames;
 }
@@ -1008,7 +1001,7 @@ function getTeamData() {
     // Buffalo Sabres
     BUF: {
       id: "7",
-      logo: "https://www.thesportsdb.com/images/media/team/badge/vuspuq1421791546.png/preview",
+      logo: "https://www.thesportsdb.com/images/media/team/badge/3m3jhp1619536655.png/preview",
     },
     // Montreal Canadiens
     MTL: {

@@ -1,4 +1,9 @@
 # Changelog
+## v5.0.2
+### Bugfixes:
+- Fixed display of next matches
+- Fixed logo of Buffalo
+
 ## v5.0.1
 ### New features:
 - If the match takes place on the current day, the widget no longer displays the date but "Today".
