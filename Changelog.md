@@ -1,4 +1,8 @@
 # Changelog
+## v5.1.0
+### Adjustments:
+- Prepared script for new season
+
 ## v5.0.2
 ### Bugfixes:
 - Fixed display of next matches
