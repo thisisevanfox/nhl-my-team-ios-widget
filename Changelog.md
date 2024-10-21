@@ -1,4 +1,11 @@
 # Changelog
+## v5.2.0
+### Adjustments:
+- Added information for Utah
+- Removed Arizona
+- Updated some logos
+- Added check for opponents data being available
+
 ## v5.1.0
 ### Adjustments:
 - Prepared script for new season
