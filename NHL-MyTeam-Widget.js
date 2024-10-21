@@ -4,12 +4,12 @@
 
 /********************************************************
  * script     : NHL-MyTeam-Widget.js
- * version    : 5.1.0
+ * version    : 5.2.0
  * description: Widget for Scriptable.app, which shows
  *              the next games for your NHL team
  * author     : @thisisevanfox
  * support    : https://git.io/JtkA1
- * date       : 2024-09-06
+ * date       : 2024-10-21
  *******************************************************/
 
 /********************************************************
@@ -20,7 +20,7 @@
 // Type the abbreviation of your NHL team here.
 // Atlantic Division: BOS, BUF, DET, FLA, MTL, OTT, TBL, TOR
 // Metropolitan Division: CAR, CBJ, NJD, NYI, NYR, PHI, PIT, WSH
-// Central Division: ARI, CHI, COL, DAL, MIN, NSH, STL, WPG
+// Central Division: CHI, COL, DAL, MIN, NSH, STL, UTA, WPG
 // Pacific Division: ANA, CGY, EDM, LAK, SJS, SEA, VAN, VGK
 const MY_NHL_TEAM = "ENTER_TEAM_ABBREVIATION_HERE";
 
@@ -756,7 +756,7 @@ function getNextGames(aGames, oTeamData) {
       // Yeey, it's a homegame for my team :-)
       oData.opponent.abbrev = oGame.awayTeam.abbrev;
     }
-    oData.opponent.logoLink = oTeamData[oData.opponent.abbrev].logo;
+    oData.opponent.logoLink = oTeamData[oData.opponent.abbrev]?.logo;
 
     aNextGames.push(oData);
   }
@@ -966,13 +966,13 @@ function getTeamData() {
     NJD: {
       id: "1",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/ssppey1547160174.png/preview",
+        "https://www.thesportsdb.com/images/media/team/badge/z4rsvp1619536740.png/preview",
     },
     // New York Islanders
     NYI: {
       id: "2",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/kj8uh41546001378.png/preview",
+        "https://www.thesportsdb.com/images/media/team/badge/hqn8511619536714.png/preview",
     },
     // New York Rangers
     NYR: {
@@ -996,7 +996,7 @@ function getTeamData() {
     BOS: {
       id: "6",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/vuspuq1421791546.png/preview",
+        "https://www.thesportsdb.com/images/media/team/badge/b1r86e1720023232.png/preview",
     },
     // Buffalo Sabres
     BUF: {
@@ -1013,7 +1013,7 @@ function getTeamData() {
     OTT: {
       id: "9",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/qurpwu1421616521.png/preview",
+        "https://www.thesportsdb.com/images/media/team/badge/2tc1qy1619536592.png/preview",
     },
     // Toronto Maple Leafs
     TOR: {
@@ -1073,7 +1073,7 @@ function getTeamData() {
     CGY: {
       id: "20",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/yqptxx1421869532.png/preview",
+        "https://www.thesportsdb.com/images/media/team/badge/v8vkk11619536610.png/preview",
     },
     // Colorado Avalanche
     COL: {
@@ -1097,7 +1097,7 @@ function getTeamData() {
     ANA: {
       id: "24",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/6g9t721547289240.png/preview",
+        "https://www.thesportsdb.com/images/media/team/badge/1d465t1719573796.png/preview",
     },
     // Dallas Stars
     DAL: {
@@ -1109,7 +1109,7 @@ function getTeamData() {
     LAK: {
       id: "26",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/uvwtvx1421535024.png/preview",
+        "https://www.thesportsdb.com/images/media/team/badge/w408rg1719220748.png/preview",
     },
     // San Jose Sharks
     SJS: {
@@ -1135,23 +1135,23 @@ function getTeamData() {
       logo:
         "https://www.thesportsdb.com/images/media/team/badge/bwn9hr1547233611.png/preview",
     },
-    // Arizona Coyotes
-    ARI: {
-      id: "53",
-      logo:
-        "https://www.thesportsdb.com/images/media/team/badge/3n1yqw1635072720.png/preview",
-    },
     // Vegas Golden Knights
     VGK: {
       id: "54",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/9w7peh1507632324.png/preview",
+        "https://www.thesportsdb.com/images/media/team/badge/7fd4521619536689.png/preview",
     },
     // Seattle Kraken
     SEA: {
       id: "55",
       logo:
         "https://www.thesportsdb.com/images/media/team/badge/zsx49m1595775836.png/preview",
+    },
+    // Utah Hockey Club
+    UTA: {
+      id: "59",
+      logo:
+        "https://www.thesportsdb.com/images/media/team/badge/zxfycs1718706518.png/preview",
     },
   };
 }
