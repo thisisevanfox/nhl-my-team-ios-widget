@@ -665,67 +665,86 @@ async function prepareData() {
       },
     },
   };
+  try {
+    const oTeamData = getTeamData();
+    const aScheduleData = await fetchScheduleData();
+    const oStandings = await fetchCurrentStandings();
 
-  const oTeamData = getTeamData();
-  const aScheduleData = await fetchScheduleData();
-  const oStandings = await fetchCurrentStandings();
+    if (
+      aScheduleData &&
+      aScheduleData.length > 0
+    ) {
+      const oNextGame = aScheduleData[0];
 
-  if (
-    aScheduleData &&
-    aScheduleData.length > 0
-  ) {
-    const oNextGame = aScheduleData[0];
+      if (oNextGame != undefined) {
+        const oHomeTeam = oNextGame.homeTeam;
+        const oAwayTeam = oNextGame.awayTeam;
 
-    if (oNextGame != undefined) {
-      const oHomeTeam = oNextGame.homeTeam;
-      const oAwayTeam = oNextGame.awayTeam;
+        const oHomeTeamTopScorer = await fetchTopScorerByAbbreviation(oHomeTeam.abbrev);
+        const oAwayTeamTopScorer = await fetchTopScorerByAbbreviation(oAwayTeam.abbrev);
 
-      const oHomeTeamTopScorer = await fetchTopScorerByAbbreviation(oHomeTeam.abbrev);
-      const oAwayTeamTopScorer = await fetchTopScorerByAbbreviation(oAwayTeam.abbrev);
+        const oHomeTeamStandings = filterStandingsByAbbreviation(
+          oHomeTeam.abbrev,
+          oStandings
+        );
+        const oAwayTeamStandings = filterStandingsByAbbreviation(
+          oAwayTeam.abbrev,
+          oStandings
+        );
 
-      const oHomeTeamStandings = filterStandingsByAbbreviation(
-        oHomeTeam.abbrev,
-        oStandings
-      );
-      const oAwayTeamStandings = filterStandingsByAbbreviation(
-        oAwayTeam.abbrev,
-        oStandings
-      );
+        oData.gameDate = oNextGame.startTimeUTC;
+        oData.venue = oNextGame.venue.default;
+        oData.nextGames = getNextGames(aScheduleData.splice(0, aScheduleData.length), oTeamData);
+        oData.homeTeam.abbrev = oHomeTeam.abbrev;
+        oData.homeTeam.logoLink = oTeamData[oHomeTeam.abbrev].logo;
+        oData.homeTeam.record = oHomeTeamStandings;
+        oData.awayTeam.abbrev = oAwayTeam.abbrev;
+        oData.awayTeam.logoLink = oTeamData[oAwayTeam.abbrev].logo;
+        oData.awayTeam.record = oAwayTeamStandings;
 
-      oData.gameDate = oNextGame.startTimeUTC;
-      oData.venue = oNextGame.venue.default;
-      oData.nextGames = getNextGames(aScheduleData.splice(0, aScheduleData.length), oTeamData);
-      oData.homeTeam.abbrev = oHomeTeam.abbrev;
-      oData.homeTeam.logoLink = oTeamData[oHomeTeam.abbrev].logo;
-      oData.homeTeam.record = oHomeTeamStandings;
-      oData.awayTeam.abbrev = oAwayTeam.abbrev;
-      oData.awayTeam.logoLink = oTeamData[oAwayTeam.abbrev].logo;
-      oData.awayTeam.record = oAwayTeamStandings;
+        if (oHomeTeamTopScorer != null) {
+          oData.homeTeam.topscorer.name = `${oHomeTeamTopScorer.firstName.default} ${oHomeTeamTopScorer.lastName.default}`;
+          oData.homeTeam.topscorer.points = oHomeTeamTopScorer.points;
+        }
+        if (oAwayTeamTopScorer != null) {
+          oData.awayTeam.topscorer.name = `${oAwayTeamTopScorer.firstName.default} ${oAwayTeamTopScorer.lastName.default}`;
+          oData.awayTeam.topscorer.points = oAwayTeamTopScorer.points;
+        }
 
-      if (oHomeTeamTopScorer != null) {
-        oData.homeTeam.topscorer.name = `${oHomeTeamTopScorer.firstName.default} ${oHomeTeamTopScorer.lastName.default}`;
-        oData.homeTeam.topscorer.points = oHomeTeamTopScorer.points;
-      }
-      if (oAwayTeamTopScorer != null) {
-        oData.awayTeam.topscorer.name = `${oAwayTeamTopScorer.firstName.default} ${oAwayTeamTopScorer.lastName.default}`;
-        oData.awayTeam.topscorer.points = oAwayTeamTopScorer.points;
-      }
-
-      if (SHOW_LIVE_SCORES) {
-        const oLiveData = await fetchLiveData(oNextGame.id);
-        if (oLiveData) {
-          oData.currentPeriod = oLiveData.period;
-          oData.timeRemaining = oLiveData.clock?.timeRemaining;
-          oData.homeTeam.goals = oLiveData.homeTeam?.score;
-          oData.awayTeam.goals = oLiveData.awayTeam?.score;
+        if (SHOW_LIVE_SCORES) {
+          const oLiveData = await fetchLiveData(oNextGame.id);
+          if (oLiveData) {
+            oData.currentPeriod = oLiveData.period;
+            oData.timeRemaining = oLiveData.clock?.timeRemaining;
+            oData.homeTeam.goals = oLiveData.homeTeam?.score;
+            oData.awayTeam.goals = oLiveData.awayTeam?.score;
+          }
         }
       }
+    } else {
+      return null;
     }
-  } else {
-    return null;
-  }
+    // Set up the file manager.
+    const oFiles = FileManager.local();
 
-  return oData;
+    // Set up cache
+    const sCachePath = oFiles.joinPath(oFiles.cacheDirectory(), 'nhl_data.json');
+
+    // Save data for later use.
+    oFiles.writeString(sCachePath, JSON.stringify(oData))
+
+    return oData;
+  } catch (e) {
+    // Set up the file manager.
+    const oFiles = FileManager.local();
+
+    // Set up cache
+    const sCachePath = oFiles.joinPath(oFiles.cacheDirectory(), 'nhl_data.json');
+
+    // Read previously stored data.
+    const oStoredData = oFiles.readString(sCachePath);
+    return JSON.parse(oStoredData);
+  }
 }
 
 /**
