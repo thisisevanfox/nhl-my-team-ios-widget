@@ -4,12 +4,12 @@
 
 /********************************************************
  * script     : NHL-MyTeam-Widget.js
- * version    : 5.2.0
+ * version    : 5.3.0
  * description: Widget for Scriptable.app, which shows
  *              the next games for your NHL team
  * author     : @thisisevanfox
  * support    : https://git.io/JtkA1
- * date       : 2024-10-21
+ * date       : 2025-03-19
  *******************************************************/
 
 /********************************************************

@@ -1,4 +1,16 @@
 # Changelog
+## v5.3.0
+### Features:
+- Offline support (thanks to @EtienneMD)
+
+### Bugfixes:
+- Fixed URLs of logos
+
+## v5.0.2
+### Bugfixes:
+- Fixed display of next matches
+- Fixed logo of Buffalo
+
 ## v5.2.0
 ### Adjustments:
 - Added information for Utah
