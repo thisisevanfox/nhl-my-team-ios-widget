@@ -985,192 +985,192 @@ function getTeamData() {
     NJD: {
       id: "1",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/z4rsvp1619536740.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/z4rsvp1619536740.png/preview",
     },
     // New York Islanders
     NYI: {
       id: "2",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/hqn8511619536714.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/hqn8511619536714.png/preview",
     },
     // New York Rangers
     NYR: {
       id: "3",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/bez4251546192693.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/bez4251546192693.png/preview",
     },
     // Philadelphia Flyers
     PHI: {
       id: "4",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/qxxppp1421794965.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/qxxppp1421794965.png/preview",
     },
     // Pittsburgh Penguins
     PIT: {
       id: "5",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/dsj3on1546192477.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/dsj3on1546192477.png/preview",
     },
     // Boston Bruins
     BOS: {
       id: "6",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/b1r86e1720023232.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/b1r86e1720023232.png/preview",
     },
     // Buffalo Sabres
     BUF: {
       id: "7",
-      logo: "https://www.thesportsdb.com/images/media/team/badge/3m3jhp1619536655.png/preview",
+      logo: "https://r2.thesportsdb.com/images/media/team/badge/3m3jhp1619536655.png/preview",
     },
     // Montreal Canadiens
     MTL: {
       id: "8",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/stpryx1421791753.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/stpryx1421791753.png/preview",
     },
     // Ottawa Senators
     OTT: {
       id: "9",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/2tc1qy1619536592.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/2tc1qy1619536592.png/preview",
     },
     // Toronto Maple Leafs
     TOR: {
       id: "10",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/mxig4p1570129307.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/mxig4p1570129307.png/preview",
     },
     // Carolina Hurricanes
     CAR: {
       id: "12",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/v07m3x1547232585.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/v07m3x1547232585.png/preview",
     },
     // Florida Panthers
     FLA: {
       id: "13",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/8qtaz11547158220.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/8qtaz11547158220.png/preview",
     },
     // Tampa Bay Lightning
     TBL: {
       id: "14",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/swysut1421791822.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/swysut1421791822.png/preview",
     },
     // Washington Capitals
     WSH: {
       id: "15",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/99ca9a1638974052.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/99ca9a1638974052.png/preview",
     },
     // Chicago Blackhawks
     CHI: {
       id: "16",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/tuwyvr1422041801.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/tuwyvr1422041801.png/preview",
     },
     // Detroit Red Wings
     DET: {
       id: "17",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/1c24ow1546544080.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/1c24ow1546544080.png/preview",
     },
     // Nashville Predators
     NSH: {
       id: "18",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/twqyvy1422052908.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/twqyvy1422052908.png/preview",
     },
     // St. Louis Blues
     STL: {
       id: "19",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/rsqtwx1422053715.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/rsqtwx1422053715.png/preview",
     },
     // Calgary Flames
     CGY: {
       id: "20",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/v8vkk11619536610.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/v8vkk11619536610.png/preview",
     },
     // Colorado Avalanche
     COL: {
       id: "21",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/wqutut1421173572.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/wqutut1421173572.png/preview",
     },
     // Edmonton Oilers
     EDM: {
       id: "22",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/uxxsyw1421618428.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/uxxsyw1421618428.png/preview",
     },
     // Vancouver Canucks
     VAN: {
       id: "23",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/xqxxpw1421875519.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/xqxxpw1421875519.png/preview",
     },
     // Anaheim Ducks
     ANA: {
       id: "24",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/1d465t1719573796.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/1d465t1719573796.png/preview",
     },
     // Dallas Stars
     DAL: {
       id: "25",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/qrvywq1422042125.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/qrvywq1422042125.png/preview",
     },
     // Los Angeles Kings
     LAK: {
       id: "26",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/w408rg1719220748.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/w408rg1719220748.png/preview",
     },
     // San Jose Sharks
     SJS: {
       id: "28",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/yui7871546193006.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/yui7871546193006.png/preview",
     },
     // Columbus Blue Jackets
     CBJ: {
       id: "29",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/ssytwt1421792535.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/ssytwt1421792535.png/preview",
     },
     // Minnesota Wild
     MIN: {
       id: "30",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/swtsxs1422042685.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/swtsxs1422042685.png/preview",
     },
     // Winnipeg Jets
     WPG: {
       id: "52",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/bwn9hr1547233611.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/bwn9hr1547233611.png/preview",
     },
     // Vegas Golden Knights
     VGK: {
       id: "54",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/7fd4521619536689.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/7fd4521619536689.png/preview",
     },
     // Seattle Kraken
     SEA: {
       id: "55",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/zsx49m1595775836.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/zsx49m1595775836.png/preview",
     },
     // Utah Hockey Club
     UTA: {
       id: "59",
       logo:
-        "https://www.thesportsdb.com/images/media/team/badge/zxfycs1718706518.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/zxfycs1718706518.png/preview",
     },
   };
 }
