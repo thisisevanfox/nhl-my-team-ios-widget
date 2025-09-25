@@ -1166,11 +1166,11 @@ function getTeamData() {
       logo:
         "https://r2.thesportsdb.com/images/media/team/badge/zsx49m1595775836.png/preview",
     },
-    // Utah Hockey Club
+    // Utah Mammoth
     UTA: {
-      id: "59",
+      id: "68",
       logo:
-        "https://r2.thesportsdb.com/images/media/team/badge/zxfycs1718706518.png/preview",
+        "https://r2.thesportsdb.com/images/media/team/badge/w5m2ab1746690303.png/preview",
     },
   };
 }
