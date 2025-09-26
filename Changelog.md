@@ -1,4 +1,8 @@
 # Changelog
+## v5.4.1
+### Bugfixes:
+- Set current season to 20252026 (instead of 20262027)
+
 ## v5.4.0
 ### Adjustments:
 - Prepared script for new season
