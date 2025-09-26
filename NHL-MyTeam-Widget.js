@@ -9,7 +9,7 @@
  *              the next games for your NHL team
  * author     : @thisisevanfox
  * support    : https://git.io/JtkA1
- * date       : 2026-09-26
+ * date       : 2025-09-26
  *******************************************************/
 
 /********************************************************
