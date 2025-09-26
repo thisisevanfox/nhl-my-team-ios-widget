@@ -1,4 +1,11 @@
 # Changelog
+## v5.4.0
+### Adjustments:
+- Prepared script for new season
+
+### Features:
+- Added Utah Mammoth (thanks to @EtienneMD)
+
 ## v5.3.0
 ### Features:
 - Offline support (thanks to @EtienneMD)
