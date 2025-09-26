@@ -4,12 +4,12 @@
 
 /********************************************************
  * script     : NHL-MyTeam-Widget.js
- * version    : 5.3.0
+ * version    : 5.4.0
  * description: Widget for Scriptable.app, which shows
  *              the next games for your NHL team
  * author     : @thisisevanfox
  * support    : https://git.io/JtkA1
- * date       : 2025-03-19
+ * date       : 2026-09-26
  *******************************************************/
 
 /********************************************************
@@ -25,9 +25,9 @@
 const MY_NHL_TEAM = "ENTER_TEAM_ABBREVIATION_HERE";
 
 // Start year of current season
-// For season 2024-25, the value must be "20242025"
-// For season 2025-26, the value must be "20242025"
-const CURRENT_SEASON = "20242025";
+// For season 2025-26, the value must be "20252026"
+// For season 2026-27, the value must be "20262027"
+const CURRENT_SEASON = "20262027";
 
 // Indicator if livescores should be shown.
 // If you don't want to be spoilered set it to false.
