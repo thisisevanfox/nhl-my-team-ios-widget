@@ -24,11 +24,6 @@
 // Pacific Division: ANA, CGY, EDM, LAK, SJS, SEA, VAN, VGK
 const MY_NHL_TEAM = "ENTER_TEAM_ABBREVIATION_HERE";
 
-// Start year of current season
-// For season 2025-26, the value must be "20252026"
-// For season 2026-27, the value must be "20262027"
-const CURRENT_SEASON = "20252026";
-
 // Indicator if livescores should be shown.
 // If you don't want to be spoilered set it to false.
 // Default: true
@@ -823,7 +818,7 @@ function filterStandingsByAbbreviation(sAbbreviation, oStandings) {
  * @return {Object}
  */
 async function fetchScheduleData() {
-  const sUrl = `https://api-web.nhle.com/v1/club-schedule-season/${MY_NHL_TEAM}/${CURRENT_SEASON}`;
+  const sUrl = `https://api-web.nhle.com/v1/club-schedule-season/${MY_NHL_TEAM}/now`;
   const oRequest = new Request(sUrl);
   const oData = await oRequest.loadJSON();
 
